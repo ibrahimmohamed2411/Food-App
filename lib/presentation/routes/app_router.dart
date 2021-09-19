@@ -1,27 +1,27 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:food_app/constants/strings.dart';
-import 'package:food_app/main.dart';
-import 'package:food_app/presentation/screens/forget_password_screen.dart';
-import 'package:food_app/presentation/screens/home_screen.dart';
-import 'package:food_app/presentation/screens/otp_screen.dart';
-import 'package:food_app/presentation/screens/sign_up_screen.dart';
-import 'package:food_app/presentation/screens/signin_screen.dart';
+import 'package:food_app/presentation/routes/screens.dart';
+
+import 'package:food_app/presentation/screens/forgetPassword/forget_password_screen.dart';
+import 'package:food_app/presentation/screens/home/home_screen.dart';
+import 'package:food_app/presentation/screens/OTP/otp_screen.dart';
+import 'package:food_app/presentation/screens/signUp/sign_up_screen.dart';
+import 'package:food_app/presentation/screens/signIn/sign_in_screen.dart';
 
 class AppRouter {
   Route? onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
-      case signInScreen:
+      case Screens.signInScreen:
         return MaterialPageRoute(builder: (ctx) => SignInScreen());
-      case otpScreen:
+      case Screens.otpScreen:
         return MaterialPageRoute(builder: (ctx) => OTPScreen());
-      case forgetPasswordScreen:
+      case Screens.forgetPasswordScreen:
         return MaterialPageRoute(builder: (ctx) => ForgetPasswordScreen());
-      case homeScreen:
+      case Screens.homeScreen:
         return MaterialPageRoute(builder: (ctx) => HomeScreen());
       // case landingScreen:
       //   return MaterialPageRoute(builder: (ctx) => LandingPage());
-      case signUpScreen:
+      case Screens.signUpScreen:
         return MaterialPageRoute(builder: (ctx) => SignUpScreen());
     }
   }

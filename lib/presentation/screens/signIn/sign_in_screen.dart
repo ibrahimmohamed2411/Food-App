@@ -1,10 +1,11 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:food_app/constants/strings.dart';
 import 'package:food_app/logic/cubit/auth/auth_cubit.dart';
-import 'package:food_app/presentation/widgets/password_field.dart';
-import 'package:food_app/presentation/widgets/rounded_button.dart';
+import 'package:food_app/presentation/routes/screens.dart';
+import 'package:food_app/presentation/widgets/custom_card.dart';
+import 'package:food_app/presentation/widgets/custom_text_field.dart';
+import 'package:food_app/presentation/widgets/google_outlined_button.dart';
+import 'package:food_app/presentation/widgets/main_button.dart';
 
 class SignInScreen extends StatelessWidget {
   const SignInScreen({Key? key}) : super(key: key);
@@ -39,65 +40,50 @@ class SignInScreen extends StatelessWidget {
                   children: [
                     TextButton(
                       onPressed: () {
-                        Navigator.of(context).pushNamed(forgetPasswordScreen);
+                        Navigator.of(context)
+                            .pushNamed(Screens.forgetPasswordScreen);
                       },
-                      child: const Text('Forget password?'),
+                      child: const Text(
+                        'Forget password?',
+                        style: TextStyle(fontSize: 18),
+                      ),
                     ),
                   ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    children: [
-                      TextFormField(
-                        controller: emailController,
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Please enter your email';
-                          }
-                          if (!value.contains('@')) {
-                            return 'Please enter a valid email address';
-                          }
-                          return null;
-                        },
-                        keyboardType: TextInputType.emailAddress,
-                        textInputAction: TextInputAction.next,
-                        decoration: const InputDecoration(
-                          hintText: 'Your Email',
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      PasswordField(
-                        controller: passwordController,
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Please enter your password';
-                          }
-                          if (value.length < 6) {
-                            return 'your password less than 6 digits';
-                          }
-                          return null;
-                        },
-                        hint: 'Password',
-                      ),
-                    ],
-                  ),
+                CustomCard(
+                  children: [
+                    CustomTextField(
+                      controller: emailController,
+                      keyboardType: TextInputType.emailAddress,
+                      textInputAction: TextInputAction.next,
+                      onChanged: (String) {},
+                      hint: 'Your Email',
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    CustomTextField(
+                      controller: passwordController,
+                      suffixIcon: IconButton(
+                          onPressed: () {},
+                          icon: const Icon(Icons.visibility_off)),
+                      hint: 'Password',
+                      onChanged: (String) {},
+                    ),
+                  ],
                 ),
-                Center(
-                  child: RoundedButton(
-                    title: 'Sign In',
-                    backgroundColor: const Color.fromARGB(255, 112, 0, 254),
-                    onPressed: () async {
-                      if (formKey.currentState!.validate()) {
-                        BlocProvider.of<AuthCubit>(context)
-                            .signInWithEmailAndPassword(
-                                emailController.text, passwordController.text);
-                      }
-                    },
-                    foregroundColor: Colors.white,
-                  ),
+                const SizedBox(
+                  height: 20,
+                ),
+                MainButton(
+                  title: 'Sign In',
+                  onPressed: () async {
+                    if (formKey.currentState!.validate()) {
+                      BlocProvider.of<AuthCubit>(context)
+                          .signInWithEmailAndPassword(
+                              emailController.text, passwordController.text);
+                    }
+                  },
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -105,13 +91,13 @@ class SignInScreen extends StatelessWidget {
                     const Text(
                       'Don\'t have an account?',
                       style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 18,
                         color: Colors.grey,
                       ),
                     ),
                     TextButton(
                       onPressed: () {
-                        Navigator.of(context).pushNamed(signUpScreen);
+                        Navigator.of(context).pushNamed(Screens.signUpScreen);
                       },
                       child: const Text(
                         'Sign Up',
@@ -125,15 +111,13 @@ class SignInScreen extends StatelessWidget {
                 const Divider(
                   color: Colors.grey,
                 ),
+                const SizedBox(
+                  height: 10,
+                ),
                 Center(
-                  child: RoundedButton(
-                    title: 'Sign In With Google',
-                    backgroundColor: Colors.white,
-                    onPressed: () async {
-                      await BlocProvider.of<AuthCubit>(context)
-                          .signInWithGoogle();
-                    },
-                    foregroundColor: Colors.black,
+                  child: GoogleOutLinedButton(
+                    text: 'Sign in with Google',
+                    onPressed: () {},
                   ),
                 ),
                 buildEmailSubmitted(),

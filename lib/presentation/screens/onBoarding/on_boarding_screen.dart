@@ -3,19 +3,94 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:food_app/constants/styles.dart';
 import 'package:food_app/presentation/screens/onBoarding/widgets/on_boarding_card.dart';
+import 'package:food_app/presentation/widgets/main_button.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class OnBoardingScreen extends StatefulWidget {
-  const OnBoardingScreen({Key? key}) : super(key: key);
+  OnBoardingScreen({Key? key}) : super(key: key);
+  final List<Widget> middle = [
+    Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: const [
+        Text(
+          'Order',
+          style: KOnBoardingTitleStyle,
+        ),
+        Padding(
+          padding: EdgeInsets.all(16.0),
+          child: Text(
+            'Order all you want from your\n favourite stores.',
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 16),
+          ),
+        ),
+      ],
+    ),
+    Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: const [
+        Text(
+          'Pick Delivery Time',
+          style: KOnBoardingTitleStyle,
+        ),
+        Padding(
+          padding: EdgeInsets.all(16.0),
+          child: Text(
+            'Receive your order in less than 1 hour.\n'
+            'Or pick a specific delivery time',
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 16),
+          ),
+        ),
+      ],
+    ),
+    Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: const [
+        Text(
+          'Get Your Order',
+          style: KOnBoardingTitleStyle,
+        ),
+        Padding(
+          padding: EdgeInsets.all(16.0),
+          child: Text(
+            'Real-time tracking will keep you posted\n'
+            'about order progress.',
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 16),
+          ),
+        ),
+      ],
+    ),
+  ];
 
   @override
   _OnBoardingScreenState createState() => _OnBoardingScreenState();
 }
 
-class _OnBoardingScreenState extends State<OnBoardingScreen> {
+class _OnBoardingScreenState extends State<OnBoardingScreen>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _animationController;
   final CarouselController _carouselController1 = CarouselController();
-  final CarouselController _carouselController2 = CarouselController();
   int activeIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 500),
+    )..forward();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _animationController.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +122,8 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                     onPageChanged: (index, reason) {
                       setState(() {
                         activeIndex = index;
-                        _carouselController2.jumpToPage(index);
+                        _animationController.reset();
+                        _animationController.forward();
                       });
                     },
                   ),
@@ -59,82 +135,15 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 ),
               ),
             ),
-            SizedBox(
-              child: CarouselSlider(
-                carouselController: _carouselController2,
-                options: CarouselOptions(
-                  height: 130,
-                  viewportFraction: 1,
-                  enableInfiniteScroll: false,
-                  enlargeStrategy: CenterPageEnlargeStrategy.scale,
-                  onPageChanged: (index, reason) {
-                    print(index);
-                    setState(() {
-                      activeIndex = index;
-                      _carouselController1.animateToPage(index);
-                    });
-                  },
-                ),
-                items: [
-                  Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: const [
-                      Text(
-                        'Order',
-                        style: KOnBoardingTitleStyle,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(16.0),
-                        child: Text(
-                          'Order all you want from your\n favourite stores.',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 16),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: const [
-                      Text(
-                        'Pick Delivery Time',
-                        style: KOnBoardingTitleStyle,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(16.0),
-                        child: Text(
-                          'Receive your order in less than 1 hour.\n'
-                          'Or pick a specific delivery time',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 16),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: const [
-                      Text(
-                        'Get Your Order',
-                        style: KOnBoardingTitleStyle,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(16.0),
-                        child: Text(
-                          'Real-time tracking will keep you posted\n'
-                          'about order progress.',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 16),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
+            AnimatedBuilder(
+                animation: _animationController,
+                child: widget.middle[activeIndex],
+                builder: (context, child) {
+                  return Opacity(
+                    opacity: _animationController.value,
+                    child: child!,
+                  );
+                }),
             Padding(
               padding: const EdgeInsets.only(bottom: 20),
               child: AnimatedSmoothIndicator(
@@ -142,37 +151,20 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 activeIndex: activeIndex,
                 onDotClicked: (index) {
                   _carouselController1.animateToPage(index);
-                  _carouselController2.jumpToPage(index);
                 },
-                effect: SlideEffect(
+                effect: WormEffect(
                     dotWidth: 10,
                     dotHeight: 10,
                     spacing: 18,
+                    type: WormType.thin,
                     paintStyle: PaintingStyle.fill,
                     dotColor: Theme.of(context).primaryColor.withOpacity(0.5),
                     activeDotColor: Theme.of(context).primaryColor),
               ),
             ),
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.symmetric(horizontal: 30),
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  primary: Theme.of(context).primaryColor,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                ),
-                onPressed: () {},
-                child: const Padding(
-                  padding: EdgeInsets.all(18),
-                  child: Text(
-                    'Start Now',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
-                  ),
-                ),
-              ),
-            ),
+            Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30),
+                child: MainButton(title: 'Start Now', onPressed: () {})),
           ],
         ),
       ),

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/constants/styles.dart';
 
-import 'package:food_app/presentation/widgets/custom_button.dart';
 import 'package:food_app/presentation/widgets/custom_card.dart';
 import 'package:food_app/presentation/widgets/custom_text_field.dart';
+import 'package:food_app/presentation/widgets/google_outlined_button.dart';
+import 'package:food_app/presentation/widgets/main_button.dart';
 
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -39,17 +40,17 @@ class SignUpScreen extends StatelessWidget {
                 ),
                 CustomCard(
                   children: [
-                    CustomTextField(hintText: 'Your Name', onChanged: (val) {}),
+                    CustomTextField(hint: 'Your Name', onChanged: (val) {}),
                     const SizedBox(
                       height: 15,
                     ),
                     CustomTextField(
-                        hintText: 'Your Phone Number', onChanged: (val) {}),
+                        hint: 'Your Phone Number', onChanged: (val) {}),
                     const SizedBox(
                       height: 15,
                     ),
                     CustomTextField(
-                      hintText: 'Location',
+                      hint: 'Location',
                       onChanged: (val) {},
                       suffixIcon: IconButton(
                         icon: const Icon(Icons.add_location_alt_outlined),
@@ -60,7 +61,7 @@ class SignUpScreen extends StatelessWidget {
                       height: 15,
                     ),
                     CustomTextField(
-                      hintText: 'Password',
+                      hint: 'Password',
                       onChanged: (val) {},
                       suffixIcon: const Icon(
                         Icons.remove_red_eye_outlined,
@@ -71,14 +72,7 @@ class SignUpScreen extends StatelessWidget {
                 const SizedBox(
                   height: 20,
                 ),
-                CustomButton(
-                  child: const Text(
-                    'Sign Up',
-                    style: TextStyle(fontSize: 18),
-                    textAlign: TextAlign.center,
-                  ),
-                  color: Theme.of(context).primaryColor,
-                ),
+                MainButton(title: 'Sign Up', onPressed: () {}),
                 const SizedBox(
                   height: 10,
                 ),
@@ -109,39 +103,9 @@ class SignUpScreen extends StatelessWidget {
                 const SizedBox(
                   height: 20,
                 ),
-                OutlinedButton(
-                  style: OutlinedButton.styleFrom(
-                    primary: Colors.black87,
-                    side: const BorderSide(width: 1),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(50),
-                    ),
-                  ),
+                GoogleOutLinedButton(
+                  text: 'Sign Up With Google',
                   onPressed: () {},
-                  child: Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(18),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(50),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                          'assets/images/google.png',
-                          height: 20,
-                        ),
-                        const SizedBox(
-                          width: 15,
-                        ),
-                        const Text(
-                          'Sign Up with Google',
-                          style: TextStyle(fontSize: 18),
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
-                    ),
-                  ),
                 ),
               ],
             ),
@@ -151,23 +115,3 @@ class SignUpScreen extends StatelessWidget {
     );
   }
 }
-// CustomButton(
-// child: Row(
-// mainAxisAlignment: MainAxisAlignment.center,
-// children: [
-// Image.asset(
-// 'images/google_light.png',
-// height: 20,
-// ),
-// const SizedBox(
-// width: 15,
-// ),
-// const Text(
-// 'Sign Up with Google',
-// style: TextStyle(fontSize: 18),
-// textAlign: TextAlign.center,
-// ),
-// ],
-// ),
-// color: Colors.black,
-// ),

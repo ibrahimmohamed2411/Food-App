@@ -9,13 +9,16 @@ class CustomCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(color: Colors.white, boxShadow: [
-        BoxShadow(
-          color: Colors.grey.shade300,
-          spreadRadius: 2,
-          blurRadius: 10,
-        ),
-      ]),
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(4),
+          boxShadow: [
+            BoxShadow(
+              color: Color(0xffECEDF1),
+              spreadRadius: 4,
+              blurRadius: 6,
+            ),
+          ]),
       child: Padding(
         padding:
             padding ?? const EdgeInsets.symmetric(horizontal: 20, vertical: 30),

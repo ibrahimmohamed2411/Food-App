@@ -1,17 +1,11 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_app/constants/colors.dart';
-import 'package:food_app/constants/strings.dart';
 import 'package:food_app/logic/cubit/auth/auth_cubit.dart';
 import 'package:food_app/presentation/routes/app_router.dart';
-import 'package:food_app/presentation/screens/forget_password_screen.dart';
-import 'package:food_app/presentation/screens/home_screen.dart';
-import 'package:food_app/presentation/screens/onBoarding/on_boarding_screen.dart';
-import 'package:food_app/presentation/screens/sign_up_screen.dart';
-import 'package:food_app/presentation/screens/signin_screen.dart';
+import 'package:food_app/presentation/screens/forgetPassword/forget_password_screen.dart';
 
 late String initialRoute;
 void main() async {
@@ -37,9 +31,9 @@ class FoodApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Food App',
         theme: ThemeData(
-          scaffoldBackgroundColor: KScaffoldColor,
           //primarySwatch: Colors.blue,
           primaryColor: KPrimary,
+          scaffoldBackgroundColor: KScaffoldColor,
           textTheme: const TextTheme(
             headline1: TextStyle(
               fontSize: 35,
@@ -49,7 +43,7 @@ class FoodApp extends StatelessWidget {
           ),
         ),
         //onGenerateRoute: appRouter.onGenerateRoute,
-        home: SignUpScreen(),
+        home: ForgetPasswordScreen(),
       ),
     );
   }
