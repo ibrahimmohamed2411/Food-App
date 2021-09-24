@@ -48,13 +48,14 @@ class AuthCubit extends Cubit<AuthState> {
     // Once signed in, return the UserCredential
     try {
       await FirebaseAuth.instance.signInWithCredential(credential);
-      emit(SignInSuccess());
+      //emit(SignInSuccess());
     } on FirebaseAuthException catch (e) {
       emit(Error(error: e.message.toString()));
     }
   }
 
   Future<void> signOut() async {
+    await GoogleSignIn().signOut();
     await FirebaseAuth.instance.signOut();
   }
 

@@ -44,7 +44,7 @@ class SignInScreen extends StatelessWidget {
                             .pushNamed(Screens.forgetPasswordScreen);
                       },
                       child: const Text(
-                        'Forget password?',
+                        'Forget Password?',
                         style: TextStyle(fontSize: 18),
                       ),
                     ),
@@ -56,7 +56,7 @@ class SignInScreen extends StatelessWidget {
                       controller: emailController,
                       keyboardType: TextInputType.emailAddress,
                       textInputAction: TextInputAction.next,
-                      onChanged: (String) {},
+                      onChanged: (String email) {},
                       hint: 'Your Email',
                     ),
                     const SizedBox(
@@ -68,7 +68,7 @@ class SignInScreen extends StatelessWidget {
                           onPressed: () {},
                           icon: const Icon(Icons.visibility_off)),
                       hint: 'Password',
-                      onChanged: (String) {},
+                      onChanged: (String password) {},
                     ),
                   ],
                 ),
@@ -78,11 +78,12 @@ class SignInScreen extends StatelessWidget {
                 MainButton(
                   title: 'Sign In',
                   onPressed: () async {
-                    if (formKey.currentState!.validate()) {
-                      BlocProvider.of<AuthCubit>(context)
-                          .signInWithEmailAndPassword(
-                              emailController.text, passwordController.text);
-                    }
+                    // if (formKey.currentState!.validate()) {
+                    //
+                    // }
+                    await BlocProvider.of<AuthCubit>(context)
+                        .signInWithEmailAndPassword(
+                            emailController.text, passwordController.text);
                   },
                 ),
                 Row(
@@ -117,7 +118,10 @@ class SignInScreen extends StatelessWidget {
                 Center(
                   child: GoogleOutLinedButton(
                     text: 'Sign in with Google',
-                    onPressed: () {},
+                    onPressed: () async {
+                      await BlocProvider.of<AuthCubit>(context)
+                          .signInWithGoogle();
+                    },
                   ),
                 ),
                 buildEmailSubmitted(),

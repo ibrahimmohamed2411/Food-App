@@ -28,9 +28,10 @@ class CustomTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Theme(
       data: ThemeData(
-          colorScheme: ThemeData()
-              .colorScheme
-              .copyWith(primary: Theme.of(context).primaryColor)),
+        colorScheme: ThemeData().colorScheme.copyWith(
+              primary: Theme.of(context).primaryColor,
+            ),
+      ),
       child: TextField(
         onChanged: onChanged,
         onTap: onTap,
