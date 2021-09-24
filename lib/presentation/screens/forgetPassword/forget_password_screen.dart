@@ -1,3 +1,4 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -26,7 +27,7 @@ class ForgetPasswordScreen extends StatelessWidget {
             children: [
               const Padding(
                 padding: EdgeInsets.only(left: 20),
-                child: const Text(
+                child: Text(
                   'Forgot\nPassword?',
                   style: TextStyle(
                     fontSize: 32,
@@ -40,21 +41,26 @@ class ForgetPasswordScreen extends StatelessWidget {
               CustomCard(
                 children: [
                   CustomTextField(
+                    controller: emailController,
                     hint: 'Your Email',
                     onChanged: (val) {},
                   )
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: MainButton(
                   title: 'Send',
-                  onPressed: () {},
+                  onPressed: () async {
+                    await BlocProvider.of<AuthCubit>(context)
+                        .sendPasswordResetEmail(emailController.text);
+                  },
                 ),
               ),
+              buildOTPSubmitted(),
             ],
           ),
         ),
@@ -82,7 +88,18 @@ class ForgetPasswordScreen extends StatelessWidget {
           );
         }
         if (state is OTPSentSuccessfully) {
-          Navigator.of(context).pushReplacementNamed(Screens.otpScreen);
+          //Navigator.of(context).pushReplacementNamed(Screens.otpScreen);
+          AwesomeDialog(
+            context: context,
+            animType: AnimType.SCALE,
+            dialogType: DialogType.SUCCES,
+            title: 'Your password has been reset',
+            desc: 'You will shortly receive an email to setup a new password',
+            btnOkOnPress: () {
+              Navigator.of(context).pushNamedAndRemoveUntil(
+                  Screens.signInScreen, (Route<dynamic> route) => false);
+            },
+          ).show();
         }
       },
       child: Container(),
