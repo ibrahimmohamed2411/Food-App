@@ -7,7 +7,12 @@ import 'package:food_app/presentation/widgets/custom_text_field.dart';
 import 'package:food_app/presentation/widgets/google_outlined_button.dart';
 import 'package:food_app/presentation/widgets/main_button.dart';
 import 'package:formz/formz.dart';
+
+part 'widgets/name_input.dart';
+
 part 'widgets/email_input.dart';
+
+part 'widgets/location_input.dart';
 
 part 'widgets/password_input.dart';
 
@@ -48,33 +53,19 @@ class SignUpScreen extends StatelessWidget {
                 ),
                 CustomCard(
                   children: [
-                    CustomTextField(hint: 'Your Name', onChanged: (val) {}),
+                    _NameInput(),
                     const SizedBox(
                       height: 15,
                     ),
-                    CustomTextField(
-                        hint: 'Your Phone Number', onChanged: (val) {}),
+                    _EmailInput(),
                     const SizedBox(
                       height: 15,
                     ),
-                    CustomTextField(
-                      hint: 'Location',
-                      onChanged: (val) {},
-                      suffixIcon: IconButton(
-                        icon: const Icon(Icons.add_location_alt_outlined),
-                        onPressed: () {},
-                      ),
-                    ),
+                    _LocationInput(),
                     const SizedBox(
                       height: 15,
                     ),
-                    CustomTextField(
-                      hint: 'Password',
-                      onChanged: (val) {},
-                      suffixIcon: const Icon(
-                        Icons.remove_red_eye_outlined,
-                      ),
-                    ),
+                    _PasswordInput(),
                   ],
                 ),
                 const SizedBox(

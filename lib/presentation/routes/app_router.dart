@@ -4,10 +4,9 @@ import 'package:food_app/presentation/routes/screens.dart';
 import 'package:food_app/presentation/screens/forgetPassword/forget_password_screen.dart';
 import 'package:food_app/presentation/screens/home/home_screen.dart';
 import 'package:food_app/presentation/screens/OTP/otp_screen.dart';
+import 'package:food_app/presentation/screens/landing/landing_page.dart';
 import 'package:food_app/presentation/screens/signUp/sign_up_screen.dart';
 import 'package:food_app/presentation/screens/signIn/sign_in_screen.dart';
-
-import '../../main.dart';
 
 class AppRouter {
   Route? onGenerateRoute(RouteSettings settings) {

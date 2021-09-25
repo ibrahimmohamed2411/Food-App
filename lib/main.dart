@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,10 +7,9 @@ import 'package:food_app/logic/cubit/auth/auth_cubit.dart';
 import 'package:food_app/logic/cubit/signIn/sign_in_cubit.dart';
 import 'package:food_app/logic/cubit/theme/theme_cubit.dart';
 import 'package:food_app/presentation/routes/app_router.dart';
-import 'package:food_app/presentation/screens/home/home_screen.dart';
-import 'package:food_app/presentation/screens/signIn/sign_in_screen.dart';
 
 import 'data/repositories/authentication_repository.dart';
+import 'logic/cubit/signUp/sign_up_cubit.dart';
 
 late String initialRoute;
 void main() async {
@@ -44,6 +42,9 @@ class FoodApp extends StatelessWidget {
           create: (BuildContext context) =>
               SignInCubit(AuthenticationRepository()),
         ),
+        BlocProvider(
+          create: (BuildContext context) => SignUpCubit(),
+        ),
       ],
       child: BlocBuilder<ThemeCubit, bool>(
         builder: (ctx, state) => MaterialApp(
@@ -66,31 +67,6 @@ class FoodApp extends StatelessWidget {
           //home: ForgetPasswordScreen(),
         ),
       ),
-    );
-  }
-}
-
-class LandingPage extends StatelessWidget {
-  const LandingPage({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return StreamBuilder<User?>(
-      stream: FirebaseAuth.instance.authStateChanges(),
-      builder: (BuildContext context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.active) {
-          final user = snapshot.data;
-          if (user == null) {
-            return const SignInScreen();
-          }
-
-          return const HomeScreen();
-        }
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const CircularProgressIndicator.adaptive();
-        }
-        return const Text('Error');
-      },
     );
   }
 }
