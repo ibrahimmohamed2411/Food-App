@@ -5,6 +5,7 @@ class CustomTextField extends StatelessWidget {
   const CustomTextField({
     Key? key,
     required this.hint,
+    this.errorText,
     required this.onChanged,
     this.suffixIcon,
     this.focusNode,
@@ -16,6 +17,7 @@ class CustomTextField extends StatelessWidget {
   }) : super(key: key);
 
   final String hint;
+  final String? errorText;
   final Function(String) onChanged;
   final TextEditingController? controller;
   final Function()? onTap;
@@ -42,6 +44,7 @@ class CustomTextField extends StatelessWidget {
         obscureText: obscureText ?? false,
         decoration: InputDecoration(
           hintText: hint,
+          errorText: errorText,
           hintStyle: TextStyle(
             color: KUnFocusTextFieldColor,
             fontSize: 16,

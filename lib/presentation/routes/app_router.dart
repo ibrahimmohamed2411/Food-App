@@ -12,6 +12,8 @@ import '../../main.dart';
 class AppRouter {
   Route? onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
+      case Screens.landingScreen:
+        return MaterialPageRoute(builder: (ctx) => const LandingPage());
       case Screens.signInScreen:
         return MaterialPageRoute(builder: (ctx) => const SignInScreen());
       case Screens.otpScreen:

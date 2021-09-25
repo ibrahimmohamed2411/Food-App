@@ -7,7 +7,7 @@ class MainButton extends StatelessWidget {
       : super(key: key);
   final String title;
   final Color? color;
-  final Function() onPressed;
+  final Function()? onPressed;
 
   @override
   Widget build(BuildContext context) {

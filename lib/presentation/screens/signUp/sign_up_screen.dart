@@ -24,6 +24,7 @@ class SignUpScreen extends StatelessWidget {
         ),
         child: SafeArea(
           child: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,

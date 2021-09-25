@@ -5,10 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_app/constants/colors.dart';
 import 'package:food_app/logic/cubit/auth/auth_cubit.dart';
+import 'package:food_app/logic/cubit/signIn/sign_in_cubit.dart';
 import 'package:food_app/logic/cubit/theme/theme_cubit.dart';
 import 'package:food_app/presentation/routes/app_router.dart';
 import 'package:food_app/presentation/screens/home/home_screen.dart';
 import 'package:food_app/presentation/screens/signIn/sign_in_screen.dart';
+
+import 'data/repositories/authentication_repository.dart';
 
 late String initialRoute;
 void main() async {
@@ -36,6 +39,10 @@ class FoodApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (BuildContext context) => ThemeCubit(),
+        ),
+        BlocProvider(
+          create: (BuildContext context) =>
+              SignInCubit(AuthenticationRepository()),
         ),
       ],
       child: BlocBuilder<ThemeCubit, bool>(
