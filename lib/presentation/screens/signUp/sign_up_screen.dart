@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_app/constants/styles.dart';
-
+import 'package:food_app/logic/cubit/signUp/sign_up_cubit.dart';
 import 'package:food_app/presentation/widgets/custom_card.dart';
 import 'package:food_app/presentation/widgets/custom_text_field.dart';
 import 'package:food_app/presentation/widgets/google_outlined_button.dart';
 import 'package:food_app/presentation/widgets/main_button.dart';
+import 'package:formz/formz.dart';
+part 'widgets/email_input.dart';
+
+part 'widgets/password_input.dart';
+
+part 'widgets/sign_in_button.dart';
 
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({Key? key}) : super(key: key);
