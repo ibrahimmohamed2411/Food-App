@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:food_app/constants/original_screen_dimensions.dart';
 import 'package:food_app/constants/styles.dart';
 import 'package:food_app/presentation/screens/onBoarding/widgets/on_boarding_card.dart';
 import 'package:food_app/presentation/widgets/main_button.dart';
@@ -163,8 +164,12 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
               ),
             ),
             Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30),
-                child: MainButton(title: 'Start Now', onPressed: () {})),
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: MainButton(
+                title: 'Start Now',
+                onPressed: () {},
+              ),
+            ),
           ],
         ),
       ),

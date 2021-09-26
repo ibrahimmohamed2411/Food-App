@@ -21,8 +21,6 @@ class AppRouter {
         return MaterialPageRoute(builder: (ctx) => ForgetPasswordScreen());
       case Screens.homeScreen:
         return MaterialPageRoute(builder: (ctx) => const HomeScreen());
-      case Screens.landingScreen:
-        return MaterialPageRoute(builder: (ctx) => const LandingPage());
       case Screens.signUpScreen:
         return MaterialPageRoute(builder: (ctx) => const SignUpScreen());
     }

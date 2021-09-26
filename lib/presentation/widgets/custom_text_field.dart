@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/constants/colors.dart';
+import 'package:food_app/constants/original_screen_dimensions.dart';
 
 class CustomTextField extends StatelessWidget {
   const CustomTextField({
@@ -26,6 +27,7 @@ class CustomTextField extends StatelessWidget {
   final TextInputType? keyboardType;
   final TextInputAction? textInputAction;
   final bool? obscureText;
+
   @override
   Widget build(BuildContext context) {
     return Theme(
@@ -35,6 +37,9 @@ class CustomTextField extends StatelessWidget {
             ),
       ),
       child: TextField(
+        style: TextStyle(
+          fontSize: 20 * OriginalScreen.scaleFactor.heightScaleFactor,
+        ),
         onChanged: onChanged,
         onTap: onTap,
         focusNode: focusNode,
@@ -43,19 +48,30 @@ class CustomTextField extends StatelessWidget {
         textInputAction: textInputAction,
         obscureText: obscureText ?? false,
         decoration: InputDecoration(
+          contentPadding: EdgeInsets.fromLTRB(
+              12 * OriginalScreen.scaleFactor.widthScaleFactor,
+              24 * OriginalScreen.scaleFactor.heightScaleFactor,
+              12 * OriginalScreen.scaleFactor.widthScaleFactor,
+              16 * OriginalScreen.scaleFactor.heightScaleFactor),
           hintText: hint,
           errorText: errorText,
           hintStyle: TextStyle(
             color: KUnFocusTextFieldColor,
-            fontSize: 16,
+            fontSize: 16 * OriginalScreen.scaleFactor.heightScaleFactor,
           ),
           suffixIcon: suffixIcon,
           focusedBorder: UnderlineInputBorder(
-            borderSide:
-                BorderSide(color: Theme.of(context).primaryColor, width: 1.5),
+            borderSide: BorderSide(
+                color: Theme.of(context).primaryColor,
+                width: 1.5 * OriginalScreen.scaleFactor.widthScaleFactor),
           ),
           enabledBorder: UnderlineInputBorder(
-            borderSide: BorderSide(color: KUnFocusTextFieldColor, width: 1.5),
+            borderSide: BorderSide(
+                color: KUnFocusTextFieldColor,
+                width: 1.5 * OriginalScreen.scaleFactor.widthScaleFactor),
+          ),
+          errorStyle: TextStyle(
+            fontSize: 14 * OriginalScreen.scaleFactor.heightScaleFactor,
           ),
         ),
       ),

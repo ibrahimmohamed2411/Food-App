@@ -1,20 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:food_app/constants/original_screen_dimensions.dart';
 import 'package:food_app/presentation/widgets/custom_button.dart';
 
 class MainButton extends StatelessWidget {
-  const MainButton(
-      {Key? key, required this.title, this.color, required this.onPressed})
-      : super(key: key);
   final String title;
   final Color? color;
   final Function()? onPressed;
+  const MainButton({
+    Key? key,
+    required this.title,
+    this.color,
+    required this.onPressed,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return CustomButton(
       child: Text(
         title,
-        style: TextStyle(fontSize: 18),
+        style: TextStyle(
+            fontSize: 18 * OriginalScreen.scaleFactor.heightScaleFactor),
         textAlign: TextAlign.center,
       ),
       color: color ?? Theme.of(context).primaryColor,

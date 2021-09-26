@@ -1,5 +1,7 @@
+import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_app/constants/colors.dart';
@@ -7,22 +9,18 @@ import 'package:food_app/logic/cubit/auth/auth_cubit.dart';
 import 'package:food_app/logic/cubit/signIn/sign_in_cubit.dart';
 import 'package:food_app/logic/cubit/theme/theme_cubit.dart';
 import 'package:food_app/presentation/routes/app_router.dart';
+import 'package:food_app/presentation/screens/signIn/sign_in_screen.dart';
 
+import 'constants/original_screen_dimensions.dart';
 import 'data/repositories/authentication_repository.dart';
 import 'logic/cubit/signUp/sign_up_cubit.dart';
 
-late String initialRoute;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  // FirebaseAuth.instance.authStateChanges().listen((user) {
-  //   if (user == null) {
-  //     initialRoute = signInScreen;
-  //   } else {
-  //     initialRoute = homeScreen;
-  //   }
-  // });
-  runApp(FoodApp(appRouter: AppRouter()));
+  runApp(
+    FoodApp(appRouter: AppRouter()),
+  );
 }
 
 class FoodApp extends StatelessWidget {
@@ -32,9 +30,9 @@ class FoodApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(
-          create: (BuildContext context) => AuthCubit(),
-        ),
+        // BlocProvider(
+        //   create: (BuildContext context) => AuthCubit(),
+        // ),
         BlocProvider(
           create: (BuildContext context) => ThemeCubit(),
         ),
@@ -64,7 +62,6 @@ class FoodApp extends StatelessWidget {
           darkTheme: ThemeData.dark(),
           themeMode: state ? ThemeMode.dark : ThemeMode.light,
           onGenerateRoute: appRouter.onGenerateRoute,
-          //home: ForgetPasswordScreen(),
         ),
       ),
     );

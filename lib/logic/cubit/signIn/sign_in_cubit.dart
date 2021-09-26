@@ -1,9 +1,14 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:food_app/data/models/email.dart';
 import 'package:food_app/data/models/password.dart';
 import 'package:food_app/data/repositories/authentication_repository.dart';
 import 'package:formz/formz.dart';
+import 'package:provider/src/provider.dart';
 
 part 'sign_in_state.dart';
 
@@ -12,25 +17,29 @@ class SignInCubit extends Cubit<SignInState> {
 
   SignInCubit(this._authenticationRepository)
       : super(SignInState(
-            email: Email.pure(''),
-            password: Password.pure(''),
+            email: const Email.pure(''),
+            password: const Password.pure(''),
             hidePassword: true,
             status: FormzStatus.invalid));
 
   void emailChanged(String newEmail) {
     final email = Email.dirty(newEmail);
-    emit(state.copyWith(
-      email: email,
-      status: Formz.validate([email, state.password]),
-    ));
+    emit(
+      state.copyWith(
+        email: email,
+        status: Formz.validate([email, state.password]),
+      ),
+    );
   }
 
   void passwordChanged(String newPassword) {
     final password = Password.dirty(newPassword);
-    emit(state.copyWith(
-      password: password,
-      status: Formz.validate([state.email, password]),
-    ));
+    emit(
+      state.copyWith(
+        password: password,
+        status: Formz.validate([state.email, password]),
+      ),
+    );
   }
 
   void togglePassword() {
@@ -59,5 +68,20 @@ class SignInCubit extends Cubit<SignInState> {
     } catch (_) {
       emit(state.copyWith(status: FormzStatus.submissionFailure));
     }
+  }
+
+  Future<void> signOut() async {
+    emit(
+      SignInState(
+          email: const Email.pure(''),
+          password: const Password.pure(''),
+          hidePassword: true,
+          status: FormzStatus.invalid),
+    );
+    await _authenticationRepository.signOut();
+  }
+
+  Future<void> sendPasswordResetEmail(String email) async {
+    await _authenticationRepository.sendPasswordResetEmail(email);
   }
 }

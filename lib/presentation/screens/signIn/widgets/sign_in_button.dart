@@ -1,7 +1,7 @@
 part of '../sign_in_screen.dart';
 
 class _SignInButton extends StatelessWidget {
-  const _SignInButton({Key? key}) : super(key: key);
+  _SignInButton({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -10,9 +10,7 @@ class _SignInButton extends StatelessWidget {
       builder: (context, state) {
         return MainButton(
           title: 'Sign In',
-          onPressed: state.status.isValidated
-              ? () => context.read<SignInCubit>().logInWithCredentials()
-              : null,
+          onPressed: () {},
         );
       },
     );
