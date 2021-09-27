@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:food_app/constants/original_screen_dimensions.dart';
 import 'package:food_app/constants/styles.dart';
 import 'package:food_app/logic/cubit/signUp/sign_up_cubit.dart';
 import 'package:food_app/presentation/widgets/custom_card.dart';
@@ -71,7 +72,10 @@ class SignUpScreen extends StatelessWidget {
                 const SizedBox(
                   height: 20,
                 ),
-                MainButton(title: 'Sign Up', onPressed: () {}),
+                MainButton(
+                  title: 'Sign Up',
+                  onPressed: () {},
+                ),
                 const SizedBox(
                   height: 10,
                 ),

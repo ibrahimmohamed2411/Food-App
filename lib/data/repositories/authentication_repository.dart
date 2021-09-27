@@ -63,4 +63,12 @@ class AuthenticationRepository {
       throw LogOutFailure();
     }
   }
+
+  Future<void> sendPasswordResetEmail(String email) async {
+    await _firebaseAuth.sendPasswordResetEmail(email: email);
+  }
+
+  User? getCurrentUser() {
+    return _firebaseAuth.currentUser;
+  }
 }

@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:food_app/constants/original_screen_dimensions.dart';
 
 class CustomButton extends StatelessWidget {
-  const CustomButton(
-      {Key? key,
-      required this.child,
-      required this.color,
-      required this.onPressed})
-      : super(key: key);
+  const CustomButton({
+    Key? key,
+    required this.child,
+    required this.color,
+    required this.onPressed,
+  }) : super(key: key);
 
   final Widget child;
   final Color color;
@@ -23,7 +24,9 @@ class CustomButton extends StatelessWidget {
       onPressed: onPressed,
       child: Container(
           width: double.infinity,
-          padding: EdgeInsets.all(20),
+          padding: EdgeInsets.symmetric(
+              horizontal: 20 * OriginalScreen.scaleFactor.widthScaleFactor,
+              vertical: 20 * OriginalScreen.scaleFactor.heightScaleFactor),
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(50)),
           child: child),
     );
