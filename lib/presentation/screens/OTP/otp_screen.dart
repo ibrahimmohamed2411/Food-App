@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:food_app/constants/original_screen_dimensions.dart';
 import 'package:food_app/presentation/widgets/main_button.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 

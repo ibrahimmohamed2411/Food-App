@@ -1,7 +1,6 @@
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:food_app/constants/original_screen_dimensions.dart';
 import 'package:food_app/constants/styles.dart';
 import 'package:food_app/presentation/screens/onBoarding/widgets/on_boarding_card.dart';
 import 'package:food_app/presentation/widgets/main_button.dart';
@@ -13,12 +12,12 @@ class OnBoardingScreen extends StatefulWidget {
     Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.center,
-      children: const [
+      children: [
         Text(
           'Order',
-          style: KOnBoardingTitleStyle,
+          style: KTitle1,
         ),
-        Padding(
+        const Padding(
           padding: EdgeInsets.all(16.0),
           child: Text(
             'Order all you want from your\n favourite stores.',
@@ -31,12 +30,12 @@ class OnBoardingScreen extends StatefulWidget {
     Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.center,
-      children: const [
+      children: [
         Text(
           'Pick Delivery Time',
-          style: KOnBoardingTitleStyle,
+          style: KTitle1,
         ),
-        Padding(
+        const Padding(
           padding: EdgeInsets.all(16.0),
           child: Text(
             'Receive your order in less than 1 hour.\n'
@@ -50,12 +49,12 @@ class OnBoardingScreen extends StatefulWidget {
     Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.center,
-      children: const [
+      children: [
         Text(
           'Get Your Order',
-          style: KOnBoardingTitleStyle,
+          style: KTitle1,
         ),
-        Padding(
+        const Padding(
           padding: EdgeInsets.all(16.0),
           child: Text(
             'Real-time tracking will keep you posted\n'
@@ -100,13 +99,13 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Padding(
-              padding: EdgeInsets.only(left: 60),
+            Padding(
+              padding: const EdgeInsets.only(left: 60),
               child: Align(
                 alignment: Alignment.topLeft,
                 child: Text(
                   'Welcome',
-                  style: KOnBoardingTitleStyle,
+                  style: KTitle1,
                 ),
               ),
             ),

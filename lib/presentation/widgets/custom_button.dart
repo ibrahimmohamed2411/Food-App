@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food_app/constants/original_screen_dimensions.dart';
+import 'package:food_app/constants/size_config.dart';
 
 class CustomButton extends StatelessWidget {
   const CustomButton({
@@ -25,8 +25,8 @@ class CustomButton extends StatelessWidget {
       child: Container(
           width: double.infinity,
           padding: EdgeInsets.symmetric(
-              horizontal: 20 * OriginalScreen.scaleFactor.widthScaleFactor,
-              vertical: 20 * OriginalScreen.scaleFactor.heightScaleFactor),
+              horizontal: 20 * SizeConfig.scaleFactor.widthScaleFactor,
+              vertical: 20 * SizeConfig.scaleFactor.heightScaleFactor),
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(50)),
           child: child),
     );

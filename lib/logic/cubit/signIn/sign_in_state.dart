@@ -5,37 +5,22 @@ class SignInState extends Equatable {
   final Password password;
   final bool hidePassword;
   final FormzStatus status;
-  void showProgressIndicator(BuildContext context) {
-    AlertDialog dialog = const AlertDialog(
-      backgroundColor: Colors.transparent,
-      elevation: 0,
-      content: Center(
-        child: CircularProgressIndicator(
-          valueColor: AlwaysStoppedAnimation(Colors.black),
-        ),
-      ),
-    );
-    showDialog(
-      context: context,
-      builder: (_) => dialog,
-      barrierColor: Colors.white.withOpacity(0),
-      barrierDismissible: false,
-    );
-  }
 
-  Function()? signInAction(BuildContext context) {
-    if (status.isValid || status.isSubmissionFailure) {
-      return context.read<SignInCubit>().logInWithCredentials;
-    } else {
-      return null;
-    }
-  }
-
-  SignInState(
+  const SignInState(
       {required this.email,
       required this.password,
       required this.hidePassword,
       required this.status});
+
+  Function()? signInButtonAction(BuildContext context) {
+    if (status.isValid) {
+      return context.read<SignInCubit>().submit;
+    } else if (status.isPure || status.isInvalid) {
+      return context.read<SignInCubit>().revalidate;
+    } else if (status.isSubmissionInProgress) {
+      return null;
+    }
+  }
 
   SignInState copyWith(
       {Email? email,

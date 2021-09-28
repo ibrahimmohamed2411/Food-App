@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food_app/constants/original_screen_dimensions.dart';
+import 'package:food_app/constants/size_config.dart';
 
 import 'custom_button.dart';
 
@@ -19,15 +19,15 @@ class GoogleElevatedButton extends StatelessWidget {
         children: [
           Image.asset(
             'assets/images/google_light.png',
-            height: 20 * OriginalScreen.scaleFactor.heightScaleFactor,
+            height: 20 * SizeConfig.scaleFactor.heightScaleFactor,
           ),
           SizedBox(
-            width: 15 * OriginalScreen.scaleFactor.widthScaleFactor,
+            width: 15 * SizeConfig.scaleFactor.widthScaleFactor,
           ),
           Text(
             title,
             style: TextStyle(
-                fontSize: 18 * OriginalScreen.scaleFactor.heightScaleFactor),
+                fontSize: 18 * SizeConfig.scaleFactor.heightScaleFactor),
             textAlign: TextAlign.center,
           ),
         ],

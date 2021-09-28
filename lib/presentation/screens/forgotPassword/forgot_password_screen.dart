@@ -3,71 +3,69 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_app/constants/size_config.dart';
+import 'package:food_app/logic/cubit/authentication/authentication_cubit.dart';
 import 'package:food_app/logic/cubit/forgotPassword/forgot_password_cubit.dart';
-import 'package:food_app/logic/cubit/signIn/sign_in_cubit.dart';
 import 'package:food_app/presentation/widgets/custom_card.dart';
 import 'package:food_app/presentation/widgets/custom_text_field.dart';
 import 'package:food_app/presentation/widgets/main_button.dart';
+
 part 'widgets/email_input.dart';
 
+part 'widgets/sign_in_button.dart';
+
 class ForgotPasswordScreen extends StatelessWidget {
-  final emailController = TextEditingController();
-  final formKey = GlobalKey<FormState>();
+  const ForgotPasswordScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: 56 * OriginalScreen.scaleFactor.heightScaleFactor,
-        backgroundColor: Colors.white,
-        elevation: 0,
-      ),
-      body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-              horizontal: 20 * OriginalScreen.scaleFactor.widthScaleFactor),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: EdgeInsets.only(
-                    left: 20 * OriginalScreen.scaleFactor.widthScaleFactor),
-                child: Text(
-                  'Forgot\nPassword?',
-                  style: TextStyle(
-                    fontSize: 32 * OriginalScreen.scaleFactor.heightScaleFactor,
-                    fontWeight: FontWeight.bold,
+      body: MultiBlocListener(
+        listeners: [
+          BlocListener<ForgotPasswordCubit, ForgotPasswordState>(
+            listener: (context, state) {},
+          ),
+          BlocListener<AuthenticationCubit, AuthenticationState>(
+            listener: (context, state) {},
+          ),
+        ],
+        child: SafeArea(
+          child: Padding(
+            padding: EdgeInsets.only(
+              top: 56 * SizeConfig.scaleFactor.heightScaleFactor,
+              left: 15 * SizeConfig.scaleFactor.widthScaleFactor,
+              right: 15 * SizeConfig.scaleFactor.widthScaleFactor,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(
+                      left: 20 * SizeConfig.scaleFactor.widthScaleFactor),
+                  child: Text(
+                    'Forgot\nPassword?',
+                    style: TextStyle(
+                      fontSize: 32 * SizeConfig.scaleFactor.heightScaleFactor,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-              ),
-              SizedBox(
-                height: 40 * OriginalScreen.scaleFactor.heightScaleFactor,
-              ),
-              CustomCard(
-                children: [
-                  CustomTextField(
-                    controller: emailController,
-                    hint: 'Your Email',
-                    onChanged: (val) {},
-                  )
-                ],
-              ),
-              SizedBox(
-                height: 30 * OriginalScreen.scaleFactor.heightScaleFactor,
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal:
-                        10 * OriginalScreen.scaleFactor.widthScaleFactor),
-                child: MainButton(
-                  title: 'Send',
-                  onPressed: () async {
-                    // await BlocProvider.of<SignInCubit>(context)
-                    //     .sendPasswordResetEmail(emailController.text);
-                  },
+                SizedBox(
+                  height: 40 * SizeConfig.scaleFactor.heightScaleFactor,
                 ),
-              ),
-              //buildOTPSubmitted(),
-            ],
+                const CustomCard(
+                  children: [_EmailInput()],
+                ),
+                SizedBox(
+                  height: 30 * SizeConfig.scaleFactor.heightScaleFactor,
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: 10 * SizeConfig.scaleFactor.widthScaleFactor),
+                  child: const _SignInButton(),
+                ),
+                //buildOTPSubmitted(),
+              ],
+            ),
           ),
         ),
       ),

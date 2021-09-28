@@ -1,15 +1,17 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:food_app/data/models/email.dart';
 import 'package:food_app/data/models/name.dart';
 import 'package:food_app/data/models/password.dart';
 import 'package:formz/formz.dart';
+import 'package:provider/src/provider.dart';
 
 part 'sign_up_state.dart';
 
 class SignUpCubit extends Cubit<SignUpState> {
   SignUpCubit()
-      : super(SignUpState(
+      : super(const SignUpState(
             name: Name.pure(),
             email: Email.pure(''),
             location: Name.pure(),
@@ -19,11 +21,13 @@ class SignUpCubit extends Cubit<SignUpState> {
 
   void nameChanged(String newName) {
     final name = Name.dirty(newName);
-    emit(state.copyWith(
-      name: name,
-      status:
-          Formz.validate([name, state.email, state.location, state.password]),
-    ));
+    emit(
+      state.copyWith(
+        name: name,
+        status:
+            Formz.validate([name, state.email, state.location, state.password]),
+      ),
+    );
   }
 
   void emailChanged(String newEmail) {
@@ -57,5 +61,28 @@ class SignUpCubit extends Cubit<SignUpState> {
     emit(state.copyWith(hidePassword: !state.hidePassword));
   }
 
-  void signUp() {}
+  void submit() {
+    if (state.status.isValid) {
+      emit(state.copyWith(status: FormzStatus.submissionInProgress));
+    }
+  }
+
+  void revalidate() {
+    var name = state.name;
+    var email = state.email;
+    var location = state.location;
+    var password = state.password;
+    emit(
+      state.copyWith(
+          name: Name.dirty(name.value),
+          email: Email.dirty(email.value),
+          location: Name.dirty(location.value),
+          password: Password.dirty(password.value),
+          status: Formz.validate([name, email, location, password])),
+    );
+  }
+
+  void endSubmit() {
+    emit(state.copyWith(status: FormzStatus.valid));
+  }
 }

@@ -1,4 +1,4 @@
-part of '../forget_password_screen.dart';
+part of '../forgot_password_screen.dart';
 
 class _EmailInput extends StatelessWidget {
   const _EmailInput({Key? key}) : super(key: key);
@@ -6,16 +6,16 @@ class _EmailInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ForgotPasswordCubit, ForgotPasswordState>(
-      // buildWhen: (previous, current) => previous.email != current.email,
+      buildWhen: (previous, current) => previous.email != current.email,
       builder: (context, state) {
         return CustomTextField(
           hint: 'Email',
-          //  errorText: state.email.invalid
-          //     ? 'Please ensure the email entered is valid'
-          //     : null,
+          errorText: state.email.invalid
+              ? 'Please ensure the email entered is valid'
+              : null,
           keyboardType: TextInputType.emailAddress,
-          onChanged: (value) {
-            //  context.read<ForgotPasswordCubit>().emailChanged(value);
+          onChanged: (val) {
+            context.read<ForgotPasswordCubit>().emailChanged(val);
           },
           textInputAction: TextInputAction.next,
         );

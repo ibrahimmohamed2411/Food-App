@@ -1,8 +1,11 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:food_app/constants/original_screen_dimensions.dart';
+import 'package:food_app/constants/size_config.dart';
 import 'package:food_app/constants/styles.dart';
+import 'package:food_app/logic/cubit/authentication/authentication_cubit.dart';
 import 'package:food_app/logic/cubit/signUp/sign_up_cubit.dart';
+import 'package:food_app/presentation/widgets/auth_circular_progress.dart';
 import 'package:food_app/presentation/widgets/custom_card.dart';
 import 'package:food_app/presentation/widgets/custom_text_field.dart';
 import 'package:food_app/presentation/widgets/google_outlined_button.dart';
@@ -17,7 +20,7 @@ part 'widgets/location_input.dart';
 
 part 'widgets/password_input.dart';
 
-part 'widgets/sign_in_button.dart';
+part 'widgets/sign_up_button.dart';
 
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -25,92 +28,134 @@ class SignUpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-      ),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       //resizeToAvoidBottomInset: false,
-      body: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 20,
-        ),
+      body: MultiBlocListener(
+        listeners: [
+          BlocListener<AuthenticationCubit, AuthenticationState>(
+            listener: (context, state) {
+              if (state is AuthenticationSuccess) {
+                AwesomeDialog(
+                  context: context,
+                  animType: AnimType.SCALE,
+                  dialogType: DialogType.SUCCES,
+                  title: 'Success',
+                  desc:
+                      'You will shortly receive an email to setup a new password',
+                  btnOkOnPress: () {},
+                ).show();
+
+                context.read<SignUpCubit>().endSubmit();
+              } else if (state is AuthenticationError) {
+                AwesomeDialog(
+                  context: context,
+                  animType: AnimType.SCALE,
+                  dialogType: DialogType.SUCCES,
+                  title: 'Your password has been reset',
+                  desc:
+                      'You will shortly receive an email to setup a new password',
+                  btnOkOnPress: () {},
+                ).show();
+
+                context.read<SignUpCubit>().endSubmit();
+              }
+            },
+          ),
+          BlocListener<SignUpCubit, SignUpState>(
+            listener: (context, state) {
+              if (state.status == FormzStatus.submissionInProgress) {
+                context.read<AuthenticationCubit>().signUp();
+              }
+            },
+          ),
+        ],
         child: SafeArea(
           child: SingleChildScrollView(
-            physics: BouncingScrollPhysics(),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Padding(
-                  padding: EdgeInsets.only(left: 15),
-                  child: Text(
-                    'Sign Up',
-                    style: KOnBoardingTitleStyle,
+            physics: const BouncingScrollPhysics(),
+            child: Padding(
+              padding: EdgeInsets.only(
+                top: 56 * SizeConfig.scaleFactor.heightScaleFactor,
+                left: 15 * SizeConfig.scaleFactor.widthScaleFactor,
+                right: 15 * SizeConfig.scaleFactor.widthScaleFactor,
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(
+                        left: 15 * SizeConfig.scaleFactor.widthScaleFactor),
+                    child: Text(
+                      'Sign Up',
+                      style: KTitle1,
+                    ),
                   ),
-                ),
-                const SizedBox(
-                  height: 70,
-                ),
-                CustomCard(
-                  children: [
-                    _NameInput(),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    _EmailInput(),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    _LocationInput(),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    _PasswordInput(),
-                  ],
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                MainButton(
-                  title: 'Sign Up',
-                  onPressed: () {},
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text(
-                      'Do you have an account?',
-                      style: TextStyle(fontSize: 16, color: Colors.grey),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Text(
-                      'Sign In',
-                      style: TextStyle(
-                          fontSize: 18, color: Theme.of(context).primaryColor),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                const Divider(
-                  thickness: 1,
-                  color: Colors.grey,
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                GoogleOutLinedButton(
-                  text: 'Sign Up With Google',
-                  onPressed: () {},
-                ),
-              ],
+                  SizedBox(
+                    height: 40 * SizeConfig.scaleFactor.heightScaleFactor,
+                  ),
+                  CustomCard(
+                    children: [
+                      const _NameInput(),
+                      SizedBox(
+                        height: 15 * SizeConfig.scaleFactor.heightScaleFactor,
+                      ),
+                      const _EmailInput(),
+                      SizedBox(
+                        height: 15 * SizeConfig.scaleFactor.heightScaleFactor,
+                      ),
+                      const _LocationInput(),
+                      SizedBox(
+                        height: 15 * SizeConfig.scaleFactor.heightScaleFactor,
+                      ),
+                      const _PasswordInput(),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 20 * SizeConfig.scaleFactor.heightScaleFactor,
+                  ),
+                  const AuthCircularProgress(),
+                  const _SignUpButton(),
+                  SizedBox(
+                    height: 10 * SizeConfig.scaleFactor.heightScaleFactor,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Do you have an account?',
+                        style: TextStyle(
+                            fontSize:
+                                16 * SizeConfig.scaleFactor.heightScaleFactor,
+                            color: Colors.grey),
+                      ),
+                      SizedBox(
+                        width: 10 * SizeConfig.scaleFactor.widthScaleFactor,
+                      ),
+                      Text(
+                        'Sign In',
+                        style: TextStyle(
+                            fontSize:
+                                18 * SizeConfig.scaleFactor.heightScaleFactor,
+                            color: Theme.of(context).primaryColor),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 20 * SizeConfig.scaleFactor.heightScaleFactor,
+                  ),
+                  const Divider(
+                    thickness: 1,
+                    color: Colors.grey,
+                  ),
+                  SizedBox(
+                    height: 20 * SizeConfig.scaleFactor.heightScaleFactor,
+                  ),
+                  GoogleOutLinedButton(
+                    text: 'Sign Up With Google',
+                    onPressed: () {},
+                  ),
+                ],
+              ),
             ),
           ),
         ),

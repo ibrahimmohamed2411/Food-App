@@ -8,7 +8,17 @@ class SignUpState extends Equatable {
   final bool hidePassword;
   final FormzStatus status;
 
-  SignUpState(
+  Function()? signUpButtonAction(BuildContext context) {
+    if (status.isValid) {
+      return context.read<SignUpCubit>().submit;
+    } else if (status.isPure || status.isInvalid) {
+      return context.read<SignUpCubit>().revalidate;
+    } else if (status.isSubmissionInProgress) {
+      return null;
+    }
+  }
+
+  const SignUpState(
       {required this.name,
       required this.email,
       required this.location,

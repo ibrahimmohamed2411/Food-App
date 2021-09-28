@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/constants/colors.dart';
-import 'package:food_app/constants/original_screen_dimensions.dart';
+import 'package:food_app/constants/size_config.dart';
 
 class CustomTextField extends StatelessWidget {
   const CustomTextField({
@@ -38,7 +38,7 @@ class CustomTextField extends StatelessWidget {
       ),
       child: TextField(
         style: TextStyle(
-          fontSize: 20 * OriginalScreen.scaleFactor.heightScaleFactor,
+          fontSize: 20 * SizeConfig.scaleFactor.heightScaleFactor,
         ),
         onChanged: onChanged,
         onTap: onTap,
@@ -48,30 +48,33 @@ class CustomTextField extends StatelessWidget {
         textInputAction: textInputAction,
         obscureText: obscureText ?? false,
         decoration: InputDecoration(
-          contentPadding: EdgeInsets.fromLTRB(
-              12 * OriginalScreen.scaleFactor.widthScaleFactor,
-              24 * OriginalScreen.scaleFactor.heightScaleFactor,
-              12 * OriginalScreen.scaleFactor.widthScaleFactor,
-              16 * OriginalScreen.scaleFactor.heightScaleFactor),
           hintText: hint,
           errorText: errorText,
+          errorStyle: TextStyle(
+            fontSize: 14 * SizeConfig.scaleFactor.heightScaleFactor,
+          ),
           hintStyle: TextStyle(
             color: KUnFocusTextFieldColor,
-            fontSize: 16 * OriginalScreen.scaleFactor.heightScaleFactor,
+            fontSize: 16 * SizeConfig.scaleFactor.heightScaleFactor,
           ),
           suffixIcon: suffixIcon,
+          suffixIconConstraints: const BoxConstraints(),
+          contentPadding: EdgeInsets.fromLTRB(
+            0,
+            8 * SizeConfig.scaleFactor.heightScaleFactor > 1
+                ? 1
+                : SizeConfig.scaleFactor.heightScaleFactor,
+            0,
+            8 * SizeConfig.scaleFactor.heightScaleFactor > 1
+                ? 1
+                : SizeConfig.scaleFactor.heightScaleFactor,
+          ),
           focusedBorder: UnderlineInputBorder(
-            borderSide: BorderSide(
-                color: Theme.of(context).primaryColor,
-                width: 1.5 * OriginalScreen.scaleFactor.widthScaleFactor),
+            borderSide:
+                BorderSide(color: Theme.of(context).primaryColor, width: 1.5),
           ),
-          enabledBorder: UnderlineInputBorder(
-            borderSide: BorderSide(
-                color: KUnFocusTextFieldColor,
-                width: 1.5 * OriginalScreen.scaleFactor.widthScaleFactor),
-          ),
-          errorStyle: TextStyle(
-            fontSize: 14 * OriginalScreen.scaleFactor.heightScaleFactor,
+          enabledBorder: const UnderlineInputBorder(
+            borderSide: BorderSide(color: KUnFocusTextFieldColor, width: 1.5),
           ),
         ),
       ),

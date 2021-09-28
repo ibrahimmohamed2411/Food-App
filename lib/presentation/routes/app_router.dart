@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:food_app/presentation/routes/screens.dart';
 
-import 'package:food_app/presentation/screens/forgetPassword/forget_password_screen.dart';
+import 'package:food_app/presentation/routes/screens.dart';
+import 'package:food_app/presentation/screens/forgotPassword/forgot_password_screen.dart';
 import 'package:food_app/presentation/screens/home/home_screen.dart';
 import 'package:food_app/presentation/screens/OTP/otp_screen.dart';
 import 'package:food_app/presentation/screens/landing/landing_page.dart';
@@ -18,7 +18,8 @@ class AppRouter {
       case Screens.otpScreen:
         return MaterialPageRoute(builder: (ctx) => const OTPScreen());
       case Screens.forgetPasswordScreen:
-        return MaterialPageRoute(builder: (ctx) => ForgetPasswordScreen());
+        return MaterialPageRoute(
+            builder: (ctx) => const ForgotPasswordScreen());
       case Screens.homeScreen:
         return MaterialPageRoute(builder: (ctx) => const HomeScreen());
       case Screens.signUpScreen:

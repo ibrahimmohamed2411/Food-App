@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:food_app/logic/cubit/auth/auth_cubit.dart';
-import 'package:food_app/logic/cubit/signIn/sign_in_cubit.dart';
+import 'package:food_app/logic/cubit/authentication/authentication_cubit.dart';
 import 'package:food_app/logic/cubit/theme/theme_cubit.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -17,7 +16,7 @@ class HomeScreen extends StatelessWidget {
             const Text('Home Screen'),
             TextButton(
               onPressed: () async {
-                await BlocProvider.of<SignInCubit>(context).signOut();
+                await BlocProvider.of<AuthenticationCubit>(context).signOut();
               },
               child: const Text('SignOut'),
             ),

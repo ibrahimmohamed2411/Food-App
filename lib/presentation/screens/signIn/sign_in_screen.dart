@@ -1,9 +1,12 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:food_app/constants/original_screen_dimensions.dart';
-import 'package:food_app/logic/cubit/auth/auth_cubit.dart';
+import 'package:food_app/constants/size_config.dart';
+import 'package:food_app/constants/styles.dart';
+import 'package:food_app/logic/cubit/authentication/authentication_cubit.dart';
 import 'package:food_app/logic/cubit/signIn/sign_in_cubit.dart';
 import 'package:food_app/presentation/routes/screens.dart';
+import 'package:food_app/presentation/widgets/auth_circular_progress.dart';
 import 'package:food_app/presentation/widgets/custom_card.dart';
 import 'package:food_app/presentation/widgets/custom_text_field.dart';
 import 'package:food_app/presentation/widgets/google_elevated_button.dart';
@@ -22,48 +25,54 @@ class SignInScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: 56 * OriginalScreen.scaleFactor.heightScaleFactor,
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-      ),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      body: SafeArea(
-        child: BlocListener<SignInCubit, SignInState>(
-          listener: (context, state) {
-            if (state.status.isSubmissionInProgress) {
-              showProgressIndicator(context);
-            } else if (state.status.isSubmissionFailure) {
-              Navigator.pop(context);
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('error'),
-                ),
-              );
-            } else if (state.status.isSubmissionSuccess) {
-              Navigator.pop(context);
-            }
-          },
+      body: MultiBlocListener(
+        listeners: [
+          BlocListener<AuthenticationCubit, AuthenticationState>(
+            listener: (context, state) {
+              if (state is AuthenticationError) {
+                AwesomeDialog(
+                  context: context,
+                  animType: AnimType.SCALE,
+                  dialogType: DialogType.SUCCES,
+                  title: 'Your password has been reset',
+                  desc:
+                      'You will shortly receive an email to setup a new password',
+                  btnOkOnPress: () {},
+                ).show();
+
+                context.read<SignInCubit>().endSubmit();
+              }
+            },
+          ),
+          BlocListener<SignInCubit, SignInState>(
+            listener: (context, state) {
+              if (state.status.isSubmissionInProgress) {
+                context
+                    .read<AuthenticationCubit>()
+                    .logInWithCredentials(state.email, state.password);
+              }
+            },
+          ),
+        ],
+        child: SafeArea(
           child: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
             child: Padding(
-              padding: EdgeInsets.symmetric(
-                  horizontal: 10 * OriginalScreen.scaleFactor.widthScaleFactor,
-                  vertical: 10 * OriginalScreen.scaleFactor.heightScaleFactor),
+              padding: EdgeInsets.only(
+                top: 56 * SizeConfig.scaleFactor.heightScaleFactor,
+                left: 15 * SizeConfig.scaleFactor.widthScaleFactor,
+                right: 15 * SizeConfig.scaleFactor.widthScaleFactor,
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
                     padding: EdgeInsets.only(
-                        left: 15 * OriginalScreen.scaleFactor.widthScaleFactor),
+                        left: 15 * SizeConfig.scaleFactor.widthScaleFactor),
                     child: Text(
                       'Sign In',
-                      style: TextStyle(
-                        fontSize:
-                            35 * OriginalScreen.scaleFactor.heightScaleFactor,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
+                      style: KTitle1,
                     ),
                   ),
                   Row(
@@ -78,25 +87,30 @@ class SignInScreen extends StatelessWidget {
                           'Forget Password?',
                           style: TextStyle(
                               fontSize: 18 *
-                                  OriginalScreen.scaleFactor.heightScaleFactor),
+                                  SizeConfig.scaleFactor.heightScaleFactor),
                         ),
                       ),
                     ],
                   ),
                   CustomCard(
                     children: [
-                      _EmailInput(),
+                      const _EmailInput(),
                       SizedBox(
-                        height:
-                            10 * OriginalScreen.scaleFactor.heightScaleFactor,
+                        height: 10 * SizeConfig.scaleFactor.heightScaleFactor,
                       ),
-                      _PasswordInput(),
+                      const _PasswordInput(),
                     ],
                   ),
                   SizedBox(
-                    height: 21 * OriginalScreen.scaleFactor.heightScaleFactor,
+                    height: 21 * SizeConfig.scaleFactor.heightScaleFactor,
                   ),
-                  _SignInButton(),
+                  const AuthCircularProgress(),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal:
+                            10 * SizeConfig.scaleFactor.widthScaleFactor),
+                    child: const _SignInButton(),
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -104,7 +118,7 @@ class SignInScreen extends StatelessWidget {
                         'Don\'t have an account?',
                         style: TextStyle(
                           fontSize:
-                              18 * OriginalScreen.scaleFactor.heightScaleFactor,
+                              18 * SizeConfig.scaleFactor.heightScaleFactor,
                           color: Colors.grey,
                         ),
                       ),
@@ -115,8 +129,8 @@ class SignInScreen extends StatelessWidget {
                         child: Text(
                           'Sign Up',
                           style: TextStyle(
-                            fontSize: 20 *
-                                OriginalScreen.scaleFactor.heightScaleFactor,
+                            fontSize:
+                                20 * SizeConfig.scaleFactor.heightScaleFactor,
                           ),
                         ),
                       ),
@@ -126,13 +140,13 @@ class SignInScreen extends StatelessWidget {
                     color: Colors.grey,
                   ),
                   SizedBox(
-                    height: 10 * OriginalScreen.scaleFactor.heightScaleFactor,
+                    height: 10 * SizeConfig.scaleFactor.heightScaleFactor,
                   ),
                   Center(
                     child: GoogleElevatedButton(
                       title: 'Sign In with Google',
                       onPressed: () async {
-                        await BlocProvider.of<SignInCubit>(context)
+                        await BlocProvider.of<AuthenticationCubit>(context)
                             .logInWithGoogle();
                       },
                     ),
@@ -143,24 +157,6 @@ class SignInScreen extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-
-  void showProgressIndicator(BuildContext context) {
-    AlertDialog dialog = const AlertDialog(
-      backgroundColor: Colors.transparent,
-      elevation: 0,
-      content: Center(
-        child: CircularProgressIndicator(
-          valueColor: AlwaysStoppedAnimation(Colors.black),
-        ),
-      ),
-    );
-    showDialog(
-      context: context,
-      builder: (_) => dialog,
-      barrierColor: Colors.white.withOpacity(0),
-      barrierDismissible: false,
     );
   }
 }

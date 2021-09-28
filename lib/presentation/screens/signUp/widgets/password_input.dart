@@ -16,13 +16,14 @@ class _PasswordInput extends StatelessWidget {
               ? '''Password must be at least 8 characters and contain at least one letter and number'''
               : null,
           obscureText: state.hidePassword,
-          suffixIcon: IconButton(
-            icon: Icon(state.hidePassword
-                ? Icons.visibility_off_outlined
-                : Icons.visibility_outlined),
-            onPressed: () {
-              context.read<SignUpCubit>().togglePassword();
-            },
+          suffixIcon: InkWell(
+            onTap: context.read<SignUpCubit>().togglePassword,
+            child: Transform.scale(
+              scale: SizeConfig.scaleFactor.heightScaleFactor,
+              child: Icon(state.hidePassword
+                  ? Icons.visibility_off_outlined
+                  : Icons.visibility_outlined),
+            ),
           ),
           onChanged: (value) {
             context.read<SignUpCubit>().passwordChanged(value);

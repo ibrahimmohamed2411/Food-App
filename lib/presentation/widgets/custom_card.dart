@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food_app/constants/original_screen_dimensions.dart';
+import 'package:food_app/constants/size_config.dart';
 
 class CustomCard extends StatelessWidget {
   const CustomCard({
@@ -15,8 +15,8 @@ class CustomCard extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(4),
-          boxShadow: [
+          borderRadius: BorderRadius.circular(6),
+          boxShadow: const [
             BoxShadow(
               color: Color(0xffECEDF1),
               spreadRadius: 4,
@@ -26,8 +26,8 @@ class CustomCard extends StatelessWidget {
       child: Padding(
         padding: padding ??
             EdgeInsets.symmetric(
-                horizontal: 20 * OriginalScreen.scaleFactor.widthScaleFactor,
-                vertical: 30 * OriginalScreen.scaleFactor.heightScaleFactor),
+                horizontal: 30 * SizeConfig.scaleFactor.widthScaleFactor,
+                vertical: 30 * SizeConfig.scaleFactor.heightScaleFactor),
         child: Column(children: children),
       ),
     );

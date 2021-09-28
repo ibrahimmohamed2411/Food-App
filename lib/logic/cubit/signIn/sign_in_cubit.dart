@@ -1,26 +1,21 @@
-import 'dart:async';
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:food_app/data/models/email.dart';
 import 'package:food_app/data/models/password.dart';
-import 'package:food_app/data/repositories/authentication_repository.dart';
 import 'package:formz/formz.dart';
 import 'package:provider/src/provider.dart';
 
 part 'sign_in_state.dart';
 
 class SignInCubit extends Cubit<SignInState> {
-  final AuthenticationRepository _authenticationRepository;
-
-  SignInCubit(this._authenticationRepository)
-      : super(SignInState(
-            email: const Email.pure(''),
-            password: const Password.pure(''),
+  SignInCubit()
+      : super(const SignInState(
+            email: Email.pure(''),
+            password: Password.pure(''),
             hidePassword: true,
-            status: FormzStatus.invalid));
+            status: FormzStatus.pure));
 
   void emailChanged(String newEmail) {
     final email = Email.dirty(newEmail);
@@ -46,42 +41,24 @@ class SignInCubit extends Cubit<SignInState> {
     emit(state.copyWith(hidePassword: !state.hidePassword));
   }
 
-  Future<void> logInWithCredentials() async {
-    if (!state.status.isValidated) return;
-    emit(state.copyWith(status: FormzStatus.submissionInProgress));
-    try {
-      await _authenticationRepository.logInWithEmailAndPassword(
-        email: state.email.value,
-        password: state.password.value,
-      );
-      emit(state.copyWith(status: FormzStatus.submissionSuccess));
-    } catch (_) {
-      emit(state.copyWith(status: FormzStatus.submissionFailure));
+  void submit() {
+    if (state.status.isValid) {
+      emit(state.copyWith(status: FormzStatus.submissionInProgress));
     }
   }
 
-  Future<void> logInWithGoogle() async {
-    emit(state.copyWith(status: FormzStatus.submissionInProgress));
-    try {
-      await _authenticationRepository.logInWithGoogle();
-      emit(state.copyWith(status: FormzStatus.submissionSuccess));
-    } catch (_) {
-      emit(state.copyWith(status: FormzStatus.submissionFailure));
-    }
-  }
-
-  Future<void> signOut() async {
+  void revalidate() {
+    var email = state.email;
+    var password = state.password;
     emit(
-      SignInState(
-          email: const Email.pure(''),
-          password: const Password.pure(''),
-          hidePassword: true,
-          status: FormzStatus.invalid),
+      state.copyWith(
+          email: Email.dirty(email.value),
+          password: Password.dirty(password.value),
+          status: Formz.validate([email, password])),
     );
-    await _authenticationRepository.signOut();
   }
 
-  Future<void> sendPasswordResetEmail(String email) async {
-    await _authenticationRepository.sendPasswordResetEmail(email);
+  void endSubmit() {
+    emit(state.copyWith(status: Formz.validate([state.email, state.password])));
   }
 }
