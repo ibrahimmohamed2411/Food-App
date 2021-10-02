@@ -17,7 +17,7 @@ class _PasswordInput extends StatelessWidget {
               : null,
           obscureText: state.hidePassword,
           suffixIcon: Transform.scale(
-            scale: SizeConfig.scaleFactor.heightScaleFactor,
+            scale: ScreenUtil().scaleHeight,
             child: InkWell(
               onTap: context.read<SignInCubit>().togglePassword,
               child: Icon(

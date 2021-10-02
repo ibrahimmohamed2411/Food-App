@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food_app/constants/size_config.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomCard extends StatelessWidget {
   const CustomCard({
@@ -24,10 +24,8 @@ class CustomCard extends StatelessWidget {
             ),
           ]),
       child: Padding(
-        padding: padding ??
-            EdgeInsets.symmetric(
-                horizontal: 30 * SizeConfig.scaleFactor.widthScaleFactor,
-                vertical: 30 * SizeConfig.scaleFactor.heightScaleFactor),
+        padding:
+            padding ?? EdgeInsets.symmetric(horizontal: 30.w, vertical: 30.h),
         child: Column(children: children),
       ),
     );

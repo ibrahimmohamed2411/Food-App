@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food_app/constants/size_config.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:food_app/presentation/widgets/custom_button.dart';
 
 class MainButton extends StatelessWidget {
@@ -18,8 +18,7 @@ class MainButton extends StatelessWidget {
     return CustomButton(
       child: Text(
         title,
-        style:
-            TextStyle(fontSize: 18 * SizeConfig.scaleFactor.heightScaleFactor),
+        style: TextStyle(fontSize: 18.sp),
         textAlign: TextAlign.center,
       ),
       color: color ?? Theme.of(context).primaryColor,

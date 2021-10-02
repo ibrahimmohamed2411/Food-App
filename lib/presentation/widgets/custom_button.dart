@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food_app/constants/size_config.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomButton extends StatelessWidget {
   const CustomButton({
@@ -18,16 +18,14 @@ class CustomButton extends StatelessWidget {
       style: ElevatedButton.styleFrom(
         primary: color,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(50),
+          borderRadius: BorderRadius.circular(50.r),
         ),
       ),
       onPressed: onPressed,
       child: Container(
           width: double.infinity,
-          padding: EdgeInsets.symmetric(
-              horizontal: 20 * SizeConfig.scaleFactor.widthScaleFactor,
-              vertical: 20 * SizeConfig.scaleFactor.heightScaleFactor),
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(50)),
+          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(50.r)),
           child: child),
     );
   }

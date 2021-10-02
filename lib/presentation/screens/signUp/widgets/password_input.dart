@@ -19,7 +19,7 @@ class _PasswordInput extends StatelessWidget {
           suffixIcon: InkWell(
             onTap: context.read<SignUpCubit>().togglePassword,
             child: Transform.scale(
-              scale: SizeConfig.scaleFactor.heightScaleFactor,
+              scale: ScreenUtil().scaleHeight,
               child: Icon(state.hidePassword
                   ? Icons.visibility_off_outlined
                   : Icons.visibility_outlined),

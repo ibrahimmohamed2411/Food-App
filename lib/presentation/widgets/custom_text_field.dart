@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:food_app/constants/colors.dart';
-import 'package:food_app/constants/size_config.dart';
 
 class CustomTextField extends StatelessWidget {
   const CustomTextField({
@@ -38,7 +38,7 @@ class CustomTextField extends StatelessWidget {
       ),
       child: TextField(
         style: TextStyle(
-          fontSize: 20 * SizeConfig.scaleFactor.heightScaleFactor,
+          fontSize: 20.sp,
         ),
         onChanged: onChanged,
         onTap: onTap,
@@ -51,23 +51,19 @@ class CustomTextField extends StatelessWidget {
           hintText: hint,
           errorText: errorText,
           errorStyle: TextStyle(
-            fontSize: 14 * SizeConfig.scaleFactor.heightScaleFactor,
+            fontSize: 14.h,
           ),
           hintStyle: TextStyle(
             color: KUnFocusTextFieldColor,
-            fontSize: 16 * SizeConfig.scaleFactor.heightScaleFactor,
+            fontSize: 16.h,
           ),
           suffixIcon: suffixIcon,
           suffixIconConstraints: const BoxConstraints(),
           contentPadding: EdgeInsets.fromLTRB(
             0,
-            8 * SizeConfig.scaleFactor.heightScaleFactor > 1
-                ? 1
-                : SizeConfig.scaleFactor.heightScaleFactor,
+            8 * (ScreenUtil().scaleHeight > 1 ? 1 : ScreenUtil().scaleHeight),
             0,
-            8 * SizeConfig.scaleFactor.heightScaleFactor > 1
-                ? 1
-                : SizeConfig.scaleFactor.heightScaleFactor,
+            8 * (ScreenUtil().scaleHeight > 1 ? 1 : ScreenUtil().scaleHeight),
           ),
           focusedBorder: UnderlineInputBorder(
             borderSide:

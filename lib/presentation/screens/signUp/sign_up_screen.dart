@@ -1,7 +1,7 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:food_app/constants/size_config.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:food_app/constants/styles.dart';
 import 'package:food_app/logic/cubit/authentication/authentication_cubit.dart';
 import 'package:food_app/logic/cubit/signUp/sign_up_cubit.dart';
@@ -74,81 +74,76 @@ class SignUpScreen extends StatelessWidget {
             physics: const BouncingScrollPhysics(),
             child: Padding(
               padding: EdgeInsets.only(
-                top: 56 * SizeConfig.scaleFactor.heightScaleFactor,
-                left: 15 * SizeConfig.scaleFactor.widthScaleFactor,
-                right: 15 * SizeConfig.scaleFactor.widthScaleFactor,
+                top: 56.h,
+                left: 15.w,
+                right: 15.w,
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: EdgeInsets.only(
-                        left: 15 * SizeConfig.scaleFactor.widthScaleFactor),
+                    padding: EdgeInsets.only(left: 15.w),
                     child: Text(
                       'Sign Up',
                       style: KTitle1,
                     ),
                   ),
                   SizedBox(
-                    height: 40 * SizeConfig.scaleFactor.heightScaleFactor,
+                    height: 40.h,
                   ),
                   CustomCard(
                     children: [
                       const _NameInput(),
                       SizedBox(
-                        height: 15 * SizeConfig.scaleFactor.heightScaleFactor,
+                        height: 15.h,
                       ),
                       const _EmailInput(),
                       SizedBox(
-                        height: 15 * SizeConfig.scaleFactor.heightScaleFactor,
+                        height: 15.h,
                       ),
                       const _LocationInput(),
                       SizedBox(
-                        height: 15 * SizeConfig.scaleFactor.heightScaleFactor,
+                        height: 15.h,
                       ),
                       const _PasswordInput(),
                     ],
                   ),
                   SizedBox(
-                    height: 20 * SizeConfig.scaleFactor.heightScaleFactor,
+                    height: 20.h,
                   ),
                   const AuthCircularProgress(),
                   const _SignUpButton(),
                   SizedBox(
-                    height: 10 * SizeConfig.scaleFactor.heightScaleFactor,
+                    height: 10.h,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
                         'Do you have an account?',
-                        style: TextStyle(
-                            fontSize:
-                                16 * SizeConfig.scaleFactor.heightScaleFactor,
-                            color: Colors.grey),
+                        style: TextStyle(fontSize: 16.sp, color: Colors.grey),
                       ),
                       SizedBox(
-                        width: 10 * SizeConfig.scaleFactor.widthScaleFactor,
+                        width: 10.w,
                       ),
                       Text(
                         'Sign In',
                         style: TextStyle(
-                            fontSize:
-                                18 * SizeConfig.scaleFactor.heightScaleFactor,
+                            fontSize: 18.sp,
                             color: Theme.of(context).primaryColor),
                       ),
                     ],
                   ),
                   SizedBox(
-                    height: 20 * SizeConfig.scaleFactor.heightScaleFactor,
+                    height: 20.h,
                   ),
                   const Divider(
                     thickness: 1,
                     color: Colors.grey,
                   ),
                   SizedBox(
-                    height: 20 * SizeConfig.scaleFactor.heightScaleFactor,
+                    height: 20.h,
                   ),
                   GoogleOutLinedButton(
                     text: 'Sign Up With Google',

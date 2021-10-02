@@ -1,8 +1,10 @@
+import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:food_app/constants/colors.dart';
 import 'package:food_app/logic/cubit/authentication/authentication_cubit.dart';
 import 'package:food_app/logic/cubit/forgotPassword/forgot_password_cubit.dart';
@@ -11,7 +13,6 @@ import 'package:food_app/logic/cubit/theme/theme_cubit.dart';
 import 'package:food_app/logic/debug/app_bloc_observer.dart';
 import 'package:food_app/presentation/routes/app_router.dart';
 
-import 'constants/size_config.dart';
 import 'logic/cubit/signUp/sign_up_cubit.dart';
 
 void main() async {
@@ -19,7 +20,10 @@ void main() async {
   await Firebase.initializeApp();
 
   Bloc.observer = AppBlocObserver();
-  runApp(FoodApp(appRouter: AppRouter()));
+  runApp(DevicePreview(
+    enabled: !kReleaseMode,
+    builder: (context) => FoodApp(appRouter: AppRouter()),
+  ));
 }
 
 class FoodApp extends StatelessWidget {
@@ -48,10 +52,9 @@ class FoodApp extends StatelessWidget {
         ),
       ],
       child: BlocBuilder<ThemeCubit, bool>(
-        builder: (ctx, state) => LayoutBuilder(
-          builder: (context, constrains) {
-            return OrientationBuilder(builder: (context, orientation) {
-              SizeConfig.initialize(constrains, orientation);
+        builder: (ctx, state) => ScreenUtilInit(
+            designSize: const Size(432.0, 816.0),
+            builder: () {
               return MaterialApp(
                 title: 'Food App',
                 theme: ThemeData(
@@ -70,9 +73,7 @@ class FoodApp extends StatelessWidget {
                 themeMode: state ? ThemeMode.dark : ThemeMode.light,
                 onGenerateRoute: appRouter.onGenerateRoute,
               );
-            });
-          },
-        ),
+            }),
       ),
     );
   }

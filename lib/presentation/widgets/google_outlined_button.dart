@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class GoogleOutLinedButton extends StatelessWidget {
   const GoogleOutLinedButton(
@@ -20,23 +21,26 @@ class GoogleOutLinedButton extends StatelessWidget {
       onPressed: onPressed,
       child: Container(
         width: double.infinity,
-        padding: const EdgeInsets.all(20),
+        padding: EdgeInsets.symmetric(
+          horizontal: 20.w,
+          vertical: 20.h,
+        ),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(50),
+          borderRadius: BorderRadius.circular(50.r),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
               'assets/images/google.png',
-              height: 20,
+              height: 20.h,
             ),
-            const SizedBox(
-              width: 15,
+            SizedBox(
+              width: 15.w,
             ),
             Text(
               text,
-              style: TextStyle(fontSize: 18),
+              style: TextStyle(fontSize: 18.sp),
               textAlign: TextAlign.center,
             ),
           ],
