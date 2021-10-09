@@ -14,7 +14,7 @@ class AuthCircularProgress extends StatelessWidget {
         return Center(
           child: Padding(
               padding: EdgeInsets.only(bottom: 20.h),
-              child: const CircularProgressIndicator()),
+              child: const CircularProgressIndicator.adaptive()),
         );
       } else {
         return const SizedBox(

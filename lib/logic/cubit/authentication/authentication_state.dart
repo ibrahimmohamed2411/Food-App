@@ -10,8 +10,12 @@ class AuthenticationInitial extends AuthenticationState {
 }
 
 class AuthenticationError extends AuthenticationState {
+  final String message;
+
+  const AuthenticationError({required this.message});
+
   @override
-  List<Object> get props => [];
+  List<Object> get props => [message];
 }
 
 class AuthenticationInProgress extends AuthenticationState {

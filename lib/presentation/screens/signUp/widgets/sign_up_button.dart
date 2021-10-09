@@ -5,7 +5,7 @@ class _SignUpButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SignUpCubit, SignUpState>(
+    return BlocBuilder<SignUpValidationCubit, SignUpValidationState>(
       buildWhen: (previous, current) => previous.status != current.status,
       builder: (context, state) {
         return MainButton(

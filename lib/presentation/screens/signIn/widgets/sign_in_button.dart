@@ -5,7 +5,7 @@ class _SignInButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SignInCubit, SignInState>(
+    return BlocBuilder<SignInValidationCubit, SignInValidationState>(
       buildWhen: (previous, current) => previous.status != current.status,
       builder: (context, state) {
         return MainButton(

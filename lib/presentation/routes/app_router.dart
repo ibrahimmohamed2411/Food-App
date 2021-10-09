@@ -1,29 +1,34 @@
 import 'package:flutter/material.dart';
 
-import 'package:food_app/presentation/routes/screens.dart';
-import 'package:food_app/presentation/screens/forgotPassword/forgot_password_screen.dart';
 import 'package:food_app/presentation/screens/home/home_screen.dart';
-import 'package:food_app/presentation/screens/OTP/otp_screen.dart';
 import 'package:food_app/presentation/screens/landing/landing_page.dart';
-import 'package:food_app/presentation/screens/signUp/sign_up_screen.dart';
 import 'package:food_app/presentation/screens/signIn/sign_in_screen.dart';
+import 'package:food_app/presentation/screens/signUp/sign_up_screen.dart';
+import 'package:food_app/presentation/screens/forgotPassword/forgot_password_screen.dart';
+import 'package:food_app/presentation/screens/OTP/otp_screen.dart';
 
 class AppRouter {
+  static const String signInScreen = '/sign-in-screen';
+  static const String forgetPasswordScreen = '/forget-password-screen';
+  static const String otpScreen = '/otp-screen';
+  static const String homeScreen = '/home-screen';
+  static const String landingScreen = '/';
+  static const String signUpScreen = '/sign-up';
   Route? onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
-      case Screens.landingScreen:
-        return MaterialPageRoute(builder: (ctx) => const LandingPage());
-      case Screens.signInScreen:
-        return MaterialPageRoute(builder: (ctx) => const SignInScreen());
-      case Screens.otpScreen:
-        return MaterialPageRoute(builder: (ctx) => const OTPScreen());
-      case Screens.forgetPasswordScreen:
+      case landingScreen:
+        return MaterialPageRoute(builder: (context) => const LandingPage());
+      case signInScreen:
+        return MaterialPageRoute(builder: (context) => const SignInScreen());
+      case otpScreen:
+        return MaterialPageRoute(builder: (context) => const OTPScreen());
+      case forgetPasswordScreen:
         return MaterialPageRoute(
-            builder: (ctx) => const ForgotPasswordScreen());
-      case Screens.homeScreen:
-        return MaterialPageRoute(builder: (ctx) => const HomeScreen());
-      case Screens.signUpScreen:
-        return MaterialPageRoute(builder: (ctx) => const SignUpScreen());
+            builder: (context) => const ForgotPasswordScreen());
+      case homeScreen:
+        return MaterialPageRoute(builder: (context) => const HomeScreen());
+      case signUpScreen:
+        return MaterialPageRoute(builder: (context) => const SignUpScreen());
     }
   }
 }

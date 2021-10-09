@@ -5,7 +5,7 @@ class _PasswordInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SignUpCubit, SignUpState>(
+    return BlocBuilder<SignUpValidationCubit, SignUpValidationState>(
       buildWhen: (previous, current) =>
           (previous.password != current.password) ||
           previous.hidePassword != current.hidePassword,
@@ -17,7 +17,7 @@ class _PasswordInput extends StatelessWidget {
               : null,
           obscureText: state.hidePassword,
           suffixIcon: InkWell(
-            onTap: context.read<SignUpCubit>().togglePassword,
+            onTap: context.read<SignUpValidationCubit>().togglePassword,
             child: Transform.scale(
               scale: ScreenUtil().scaleHeight,
               child: Icon(state.hidePassword
@@ -26,7 +26,7 @@ class _PasswordInput extends StatelessWidget {
             ),
           ),
           onChanged: (value) {
-            context.read<SignUpCubit>().passwordChanged(value);
+            context.read<SignUpValidationCubit>().passwordChanged(value);
           },
           textInputAction: TextInputAction.done,
         );

@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:food_app/constants/styles.dart';
+import 'package:food_app/data/models/local_user.dart';
 import 'package:food_app/logic/cubit/authentication/authentication_cubit.dart';
-import 'package:food_app/logic/cubit/signUp/sign_up_cubit.dart';
+import 'package:food_app/logic/cubit/signUpValidation/sign_up_validation_cubit.dart';
 import 'package:food_app/presentation/widgets/auth_circular_progress.dart';
 import 'package:food_app/presentation/widgets/custom_card.dart';
 import 'package:food_app/presentation/widgets/custom_text_field.dart';
@@ -45,7 +46,7 @@ class SignUpScreen extends StatelessWidget {
                   btnOkOnPress: () {},
                 ).show();
 
-                context.read<SignUpCubit>().endSubmit();
+                context.read<SignUpValidationCubit>().endSubmit();
               } else if (state is AuthenticationError) {
                 AwesomeDialog(
                   context: context,
@@ -57,14 +58,23 @@ class SignUpScreen extends StatelessWidget {
                   btnOkOnPress: () {},
                 ).show();
 
-                context.read<SignUpCubit>().endSubmit();
+                context.read<SignUpValidationCubit>().endSubmit();
               }
             },
           ),
-          BlocListener<SignUpCubit, SignUpState>(
+          BlocListener<SignUpValidationCubit, SignUpValidationState>(
             listener: (context, state) {
               if (state.status == FormzStatus.submissionInProgress) {
-                context.read<AuthenticationCubit>().signUp();
+                context
+                    .read<AuthenticationCubit>()
+                    .createUserWithEmailAndPassword(
+                      localUser: LocalUser(
+                        name: state.name.value,
+                        email: state.email.value,
+                        location: state.location.value,
+                      ),
+                      password: state.password.value,
+                    );
               }
             },
           ),
@@ -114,29 +124,23 @@ class SignUpScreen extends StatelessWidget {
                   ),
                   const AuthCircularProgress(),
                   const _SignUpButton(),
-                  SizedBox(
-                    height: 10.h,
-                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
                         'Do you have an account?',
-                        style: TextStyle(fontSize: 16.sp, color: Colors.grey),
+                        style: TextStyle(fontSize: 18.sp, color: Colors.grey),
                       ),
-                      SizedBox(
-                        width: 10.w,
-                      ),
-                      Text(
-                        'Sign In',
-                        style: TextStyle(
-                            fontSize: 18.sp,
-                            color: Theme.of(context).primaryColor),
-                      ),
+                      TextButton(
+                        onPressed: () {},
+                        child: Text(
+                          'Sign In',
+                          style: TextStyle(
+                              fontSize: 20.sp,
+                              color: Theme.of(context).primaryColor),
+                        ),
+                      )
                     ],
-                  ),
-                  SizedBox(
-                    height: 20.h,
                   ),
                   const Divider(
                     thickness: 1,

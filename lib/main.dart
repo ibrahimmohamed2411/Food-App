@@ -8,22 +8,26 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:food_app/constants/colors.dart';
 import 'package:food_app/logic/cubit/authentication/authentication_cubit.dart';
 import 'package:food_app/logic/cubit/forgotPassword/forgot_password_cubit.dart';
-import 'package:food_app/logic/cubit/signIn/sign_in_cubit.dart';
 import 'package:food_app/logic/cubit/theme/theme_cubit.dart';
 import 'package:food_app/logic/debug/app_bloc_observer.dart';
 import 'package:food_app/presentation/routes/app_router.dart';
 
-import 'logic/cubit/signUp/sign_up_cubit.dart';
+import 'logic/cubit/signInValidation/sign_in_validation_cubit.dart';
+import 'logic/cubit/signUpValidation/sign_up_validation_cubit.dart';
 
+/*
+DevicePreview(
+    enabled: !kReleaseMode,
+    builder: (context) =>
+    */
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
   Bloc.observer = AppBlocObserver();
-  runApp(DevicePreview(
-    enabled: !kReleaseMode,
-    builder: (context) => FoodApp(appRouter: AppRouter()),
-  ));
+  runApp(
+    FoodApp(appRouter: AppRouter()),
+  );
 }
 
 class FoodApp extends StatelessWidget {
@@ -42,10 +46,10 @@ class FoodApp extends StatelessWidget {
           create: (BuildContext context) => ThemeCubit(),
         ),
         BlocProvider(
-          create: (BuildContext context) => SignInCubit(),
+          create: (BuildContext context) => SignInValidationCubit(),
         ),
         BlocProvider(
-          create: (BuildContext context) => SignUpCubit(),
+          create: (BuildContext context) => SignUpValidationCubit(),
         ),
         BlocProvider(
           create: (BuildContext context) => ForgotPasswordCubit(),
@@ -53,27 +57,28 @@ class FoodApp extends StatelessWidget {
       ],
       child: BlocBuilder<ThemeCubit, bool>(
         builder: (ctx, state) => ScreenUtilInit(
-            designSize: const Size(432.0, 816.0),
-            builder: () {
-              return MaterialApp(
-                title: 'Food App',
-                theme: ThemeData(
-                  //primarySwatch: Colors.blue,
-                  primaryColor: KPrimary,
-                  scaffoldBackgroundColor: KScaffoldColor,
-                  textTheme: const TextTheme(
-                    headline1: TextStyle(
-                      fontSize: 35,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
+          designSize: const Size(432.0, 816.0),
+          builder: () {
+            return MaterialApp(
+              title: 'Food App',
+              theme: ThemeData(
+                //primarySwatch: Colors.blue,
+                primaryColor: KPrimary,
+                scaffoldBackgroundColor: KScaffoldColor,
+                textTheme: const TextTheme(
+                  headline1: TextStyle(
+                    fontSize: 35,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
                   ),
                 ),
-                darkTheme: ThemeData.dark(),
-                themeMode: state ? ThemeMode.dark : ThemeMode.light,
-                onGenerateRoute: appRouter.onGenerateRoute,
-              );
-            }),
+              ),
+              darkTheme: ThemeData.dark(),
+              themeMode: state ? ThemeMode.dark : ThemeMode.light,
+              onGenerateRoute: appRouter.onGenerateRoute,
+            );
+          },
+        ),
       ),
     );
   }

@@ -1,6 +1,6 @@
-part of 'sign_up_cubit.dart';
+part of 'sign_up_validation_cubit.dart';
 
-class SignUpState extends Equatable {
+class SignUpValidationState extends Equatable {
   final Name name;
   final Email email;
   final Name location;
@@ -10,15 +10,15 @@ class SignUpState extends Equatable {
 
   Function()? signUpButtonAction(BuildContext context) {
     if (status.isValid) {
-      return context.read<SignUpCubit>().submit;
+      return context.read<SignUpValidationCubit>().submit;
     } else if (status.isPure || status.isInvalid) {
-      return context.read<SignUpCubit>().revalidate;
+      return context.read<SignUpValidationCubit>().revalidate;
     } else if (status.isSubmissionInProgress) {
       return null;
     }
   }
 
-  const SignUpState(
+  const SignUpValidationState(
       {required this.name,
       required this.email,
       required this.location,
@@ -26,14 +26,14 @@ class SignUpState extends Equatable {
       required this.hidePassword,
       required this.status});
 
-  SignUpState copyWith(
+  SignUpValidationState copyWith(
       {Name? name,
       Email? email,
       Name? location,
       Password? password,
       bool? hidePassword,
       FormzStatus? status}) {
-    return SignUpState(
+    return SignUpValidationState(
       name: name ?? this.name,
       email: email ?? this.email,
       location: location ?? this.location,

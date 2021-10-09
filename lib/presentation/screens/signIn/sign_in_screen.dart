@@ -1,17 +1,17 @@
-import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:food_app/constants/size_config.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:formz/formz.dart';
 import 'package:food_app/constants/styles.dart';
 import 'package:food_app/logic/cubit/authentication/authentication_cubit.dart';
-import 'package:food_app/logic/cubit/signIn/sign_in_cubit.dart';
-import 'package:food_app/presentation/routes/screens.dart';
+import 'package:food_app/logic/cubit/signInValidation/sign_in_validation_cubit.dart';
+import 'package:food_app/presentation/routes/app_router.dart';
 import 'package:food_app/presentation/widgets/auth_circular_progress.dart';
 import 'package:food_app/presentation/widgets/custom_card.dart';
 import 'package:food_app/presentation/widgets/custom_text_field.dart';
 import 'package:food_app/presentation/widgets/google_elevated_button.dart';
 import 'package:food_app/presentation/widgets/main_button.dart';
-import 'package:formz/formz.dart';
 
 part 'widgets/email_input.dart';
 
@@ -35,17 +35,16 @@ class SignInScreen extends StatelessWidget {
                   context: context,
                   animType: AnimType.SCALE,
                   dialogType: DialogType.SUCCES,
-                  title: 'Your password has been reset',
-                  desc:
-                      'You will shortly receive an email to setup a new password',
+                  title: 'Failed',
+                  desc: state.message,
                   btnOkOnPress: () {},
                 ).show();
 
-                context.read<SignInCubit>().endSubmit();
+                context.read<SignInValidationCubit>().endSubmit();
               }
             },
           ),
-          BlocListener<SignInCubit, SignInState>(
+          BlocListener<SignInValidationCubit, SignInValidationState>(
             listener: (context, state) {
               if (state.status.isSubmissionInProgress) {
                 context
@@ -60,16 +59,15 @@ class SignInScreen extends StatelessWidget {
             physics: const BouncingScrollPhysics(),
             child: Padding(
               padding: EdgeInsets.only(
-                top: 56 * SizeConfig.scaleFactor.heightScaleFactor,
-                left: 15 * SizeConfig.scaleFactor.widthScaleFactor,
-                right: 15 * SizeConfig.scaleFactor.widthScaleFactor,
+                top: 56.h,
+                left: 15.w,
+                right: 15.w,
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: EdgeInsets.only(
-                        left: 15 * SizeConfig.scaleFactor.widthScaleFactor),
+                    padding: EdgeInsets.only(left: 15.w),
                     child: Text(
                       'Sign In',
                       style: KTitle1,
@@ -81,13 +79,11 @@ class SignInScreen extends StatelessWidget {
                       TextButton(
                         onPressed: () {
                           Navigator.of(context)
-                              .pushNamed(Screens.forgetPasswordScreen);
+                              .pushNamed(AppRouter.forgetPasswordScreen);
                         },
                         child: Text(
                           'Forget Password?',
-                          style: TextStyle(
-                              fontSize: 18 *
-                                  SizeConfig.scaleFactor.heightScaleFactor),
+                          style: TextStyle(fontSize: 18.sp),
                         ),
                       ),
                     ],
@@ -96,19 +92,17 @@ class SignInScreen extends StatelessWidget {
                     children: [
                       const _EmailInput(),
                       SizedBox(
-                        height: 10 * SizeConfig.scaleFactor.heightScaleFactor,
+                        height: 10.h,
                       ),
                       const _PasswordInput(),
                     ],
                   ),
                   SizedBox(
-                    height: 21 * SizeConfig.scaleFactor.heightScaleFactor,
+                    height: 21.h,
                   ),
                   const AuthCircularProgress(),
                   Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal:
-                            10 * SizeConfig.scaleFactor.widthScaleFactor),
+                    padding: EdgeInsets.symmetric(horizontal: 10.w),
                     child: const _SignInButton(),
                   ),
                   Row(
@@ -117,20 +111,19 @@ class SignInScreen extends StatelessWidget {
                       Text(
                         'Don\'t have an account?',
                         style: TextStyle(
-                          fontSize:
-                              18 * SizeConfig.scaleFactor.heightScaleFactor,
+                          fontSize: 18.sp,
                           color: Colors.grey,
                         ),
                       ),
                       TextButton(
                         onPressed: () {
-                          Navigator.of(context).pushNamed(Screens.signUpScreen);
+                          Navigator.of(context)
+                              .pushNamed(AppRouter.signUpScreen);
                         },
                         child: Text(
                           'Sign Up',
                           style: TextStyle(
-                            fontSize:
-                                20 * SizeConfig.scaleFactor.heightScaleFactor,
+                            fontSize: 20.sp,
                           ),
                         ),
                       ),
@@ -140,7 +133,7 @@ class SignInScreen extends StatelessWidget {
                     color: Colors.grey,
                   ),
                   SizedBox(
-                    height: 10 * SizeConfig.scaleFactor.heightScaleFactor,
+                    height: 10.h,
                   ),
                   Center(
                     child: GoogleElevatedButton(

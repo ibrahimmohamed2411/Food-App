@@ -7,11 +7,11 @@ import 'package:food_app/data/models/password.dart';
 import 'package:formz/formz.dart';
 import 'package:provider/src/provider.dart';
 
-part 'sign_up_state.dart';
+part 'sign_up_validation_state.dart';
 
-class SignUpCubit extends Cubit<SignUpState> {
-  SignUpCubit()
-      : super(const SignUpState(
+class SignUpValidationCubit extends Cubit<SignUpValidationState> {
+  SignUpValidationCubit()
+      : super(const SignUpValidationState(
             name: Name.pure(),
             email: Email.pure(''),
             location: Name.pure(),

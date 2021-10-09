@@ -1,13 +1,14 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:food_app/constants/size_config.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:food_app/logic/cubit/authentication/authentication_cubit.dart';
 import 'package:food_app/logic/cubit/forgotPassword/forgot_password_cubit.dart';
+import 'package:food_app/logic/cubit/signUpValidation/sign_up_validation_cubit.dart';
 import 'package:food_app/presentation/widgets/custom_card.dart';
 import 'package:food_app/presentation/widgets/custom_text_field.dart';
 import 'package:food_app/presentation/widgets/main_button.dart';
+import 'package:formz/formz.dart';
 
 part 'widgets/email_input.dart';
 
@@ -21,46 +22,68 @@ class ForgotPasswordScreen extends StatelessWidget {
     return Scaffold(
       body: MultiBlocListener(
         listeners: [
-          BlocListener<ForgotPasswordCubit, ForgotPasswordState>(
-            listener: (context, state) {},
-          ),
           BlocListener<AuthenticationCubit, AuthenticationState>(
-            listener: (context, state) {},
+              listener: (context, state) {
+            if (state is AuthenticationSuccess) {
+              AwesomeDialog(
+                context: context,
+                animType: AnimType.SCALE,
+                dialogType: DialogType.SUCCES,
+                title: 'Send Successfully',
+                desc:
+                    'You will shortly receive an email to setup a new password',
+                btnOkOnPress: () {},
+              ).show();
+
+              context.read<SignUpValidationCubit>().endSubmit();
+            } else if (state is AuthenticationError) {}
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Check internet connection'),
+              ),
+            );
+          }),
+          BlocListener<ForgotPasswordCubit, ForgotPasswordState>(
+            listener: (context, state) {
+              if (state.status == FormzStatus.submissionInProgress) {
+                context
+                    .read<AuthenticationCubit>()
+                    .sendPasswordResetEmail(state.email.value);
+              }
+            },
           ),
         ],
         child: SafeArea(
           child: Padding(
             padding: EdgeInsets.only(
-              top: 56 * SizeConfig.scaleFactor.heightScaleFactor,
-              left: 15 * SizeConfig.scaleFactor.widthScaleFactor,
-              right: 15 * SizeConfig.scaleFactor.widthScaleFactor,
+              top: 56.h,
+              left: 15.w,
+              right: 15.w,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: EdgeInsets.only(
-                      left: 20 * SizeConfig.scaleFactor.widthScaleFactor),
+                  padding: EdgeInsets.only(left: 20.w),
                   child: Text(
                     'Forgot\nPassword?',
                     style: TextStyle(
-                      fontSize: 32 * SizeConfig.scaleFactor.heightScaleFactor,
+                      fontSize: 32.h,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
                 SizedBox(
-                  height: 40 * SizeConfig.scaleFactor.heightScaleFactor,
+                  height: 40.h,
                 ),
                 const CustomCard(
                   children: [_EmailInput()],
                 ),
                 SizedBox(
-                  height: 30 * SizeConfig.scaleFactor.heightScaleFactor,
+                  height: 30.h,
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: 10 * SizeConfig.scaleFactor.widthScaleFactor),
+                  padding: EdgeInsets.symmetric(horizontal: 10.w),
                   child: const _SignInButton(),
                 ),
                 //buildOTPSubmitted(),
@@ -71,44 +94,6 @@ class ForgotPasswordScreen extends StatelessWidget {
       ),
     );
   }
-
-  // Widget buildOTPSubmitted() {
-  //   return BlocListener<SignInCubit, SignInState>(
-  //     listenWhen: (p, c) {
-  //       return p != c;
-  //     },
-  //     listener: (BuildContext context, state) {
-  //       if (state is Loading) {
-  //         showProgressIndicator(context);
-  //       }
-  //       if (state is Error) {
-  //         Navigator.of(context).pop(); // close loading indicator
-  //         ScaffoldMessenger.of(context).showSnackBar(
-  //           SnackBar(
-  //             content: Text(state.error),
-  //             backgroundColor: Colors.black,
-  //             duration: const Duration(seconds: 3),
-  //           ),
-  //         );
-  //       }
-  //       if (state is OTPSentSuccessfully) {
-  //         //Navigator.of(context).pushReplacementNamed(Screens.otpScreen);
-  //         AwesomeDialog(
-  //           context: context,
-  //           animType: AnimType.SCALE,
-  //           dialogType: DialogType.SUCCES,
-  //           title: 'Your password has been reset',
-  //           desc: 'You will shortly receive an email to setup a new password',
-  //           btnOkOnPress: () {
-  //             Navigator.of(context).pushNamedAndRemoveUntil(
-  //                 Screens.signInScreen, (Route<dynamic> route) => false);
-  //           },
-  //         ).show();
-  //       }
-  //     },
-  //     child: Container(),
-  //   );
-  // }
 
   void showProgressIndicator(BuildContext context) {
     AlertDialog dialog = const AlertDialog(

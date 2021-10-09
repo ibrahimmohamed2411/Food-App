@@ -7,11 +7,11 @@ import 'package:food_app/data/models/password.dart';
 import 'package:formz/formz.dart';
 import 'package:provider/src/provider.dart';
 
-part 'sign_in_state.dart';
+part 'sign_in_validation_state.dart';
 
-class SignInCubit extends Cubit<SignInState> {
-  SignInCubit()
-      : super(const SignInState(
+class SignInValidationCubit extends Cubit<SignInValidationState> {
+  SignInValidationCubit()
+      : super(const SignInValidationState(
             email: Email.pure(''),
             password: Password.pure(''),
             hidePassword: true,

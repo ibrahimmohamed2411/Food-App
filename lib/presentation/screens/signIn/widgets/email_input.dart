@@ -5,7 +5,7 @@ class _EmailInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SignInCubit, SignInState>(
+    return BlocBuilder<SignInValidationCubit, SignInValidationState>(
       buildWhen: (previous, current) => previous.email != current.email,
       builder: (context, state) {
         return CustomTextField(
@@ -15,7 +15,7 @@ class _EmailInput extends StatelessWidget {
               : null,
           keyboardType: TextInputType.emailAddress,
           onChanged: (value) {
-            context.read<SignInCubit>().emailChanged(value);
+            context.read<SignInValidationCubit>().emailChanged(value);
           },
           textInputAction: TextInputAction.next,
         );
