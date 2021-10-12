@@ -27,3 +27,10 @@ class AuthenticationSuccess extends AuthenticationState {
   @override
   List<Object> get props => [];
 }
+// class SignUpError extends AuthenticationState{
+//   final String message;
+//   const SignUpError({required this.message});
+//
+//   @override
+//   List<Object?> get props => [];
+// }

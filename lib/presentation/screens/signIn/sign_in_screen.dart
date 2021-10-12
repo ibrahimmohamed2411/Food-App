@@ -28,22 +28,6 @@ class SignInScreen extends StatelessWidget {
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: MultiBlocListener(
         listeners: [
-          BlocListener<AuthenticationCubit, AuthenticationState>(
-            listener: (context, state) {
-              if (state is AuthenticationError) {
-                AwesomeDialog(
-                  context: context,
-                  animType: AnimType.SCALE,
-                  dialogType: DialogType.SUCCES,
-                  title: 'Failed',
-                  desc: state.message,
-                  btnOkOnPress: () {},
-                ).show();
-
-                context.read<SignInValidationCubit>().endSubmit();
-              }
-            },
-          ),
           BlocListener<SignInValidationCubit, SignInValidationState>(
             listener: (context, state) {
               if (state.status.isSubmissionInProgress) {

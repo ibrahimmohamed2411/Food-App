@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:food_app/presentation/screens/home/home_screen.dart';
 import 'package:food_app/presentation/screens/landing/landing_page.dart';
+import 'package:food_app/presentation/screens/payment/payment_screen.dart';
 import 'package:food_app/presentation/screens/signIn/sign_in_screen.dart';
 import 'package:food_app/presentation/screens/signUp/sign_up_screen.dart';
 import 'package:food_app/presentation/screens/forgotPassword/forgot_password_screen.dart';
@@ -14,6 +15,7 @@ class AppRouter {
   static const String homeScreen = '/home-screen';
   static const String landingScreen = '/';
   static const String signUpScreen = '/sign-up';
+  static const String paymentScreen = '/payment-screen';
   Route? onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       case landingScreen:
@@ -29,6 +31,8 @@ class AppRouter {
         return MaterialPageRoute(builder: (context) => const HomeScreen());
       case signUpScreen:
         return MaterialPageRoute(builder: (context) => const SignUpScreen());
+      case paymentScreen:
+        return MaterialPageRoute(builder: (context) => const PaymentScreen());
     }
   }
 }

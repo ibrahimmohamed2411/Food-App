@@ -11,7 +11,9 @@ import 'package:food_app/logic/cubit/forgotPassword/forgot_password_cubit.dart';
 import 'package:food_app/logic/cubit/theme/theme_cubit.dart';
 import 'package:food_app/logic/debug/app_bloc_observer.dart';
 import 'package:food_app/presentation/routes/app_router.dart';
+import 'package:food_app/presentation/screens/payment/payment_screen.dart';
 
+import 'constants/styles.dart';
 import 'logic/cubit/signInValidation/sign_in_validation_cubit.dart';
 import 'logic/cubit/signUpValidation/sign_up_validation_cubit.dart';
 
@@ -65,12 +67,8 @@ class FoodApp extends StatelessWidget {
                 //primarySwatch: Colors.blue,
                 primaryColor: KPrimary,
                 scaffoldBackgroundColor: KScaffoldColor,
-                textTheme: const TextTheme(
-                  headline1: TextStyle(
-                    fontSize: 35,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
+                textTheme: TextTheme(
+                  headline1: KHeadline1,
                 ),
               ),
               darkTheme: ThemeData.dark(),

@@ -47,6 +47,8 @@ dependencies:
   equatable: ^2.0.3
   device_preview: ^0.7.4
   flutter_screenutil: ^5.0.0+2
+  flutter_credit_card: ^3.0.0
+
 
 
 

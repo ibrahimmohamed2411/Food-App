@@ -5,9 +5,6 @@ import 'package:food_app/data/models/email.dart';
 import 'package:food_app/data/models/local_user.dart';
 import 'package:food_app/data/models/password.dart';
 import 'package:food_app/data/repositories/authentication_repository.dart';
-import 'package:food_app/data/services/data_base.dart';
-import 'package:food_app/data/services/fire_store_service.dart';
-
 part 'authentication_state.dart';
 
 class AuthenticationCubit extends Cubit<AuthenticationState> {

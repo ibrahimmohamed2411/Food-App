@@ -7,3 +7,8 @@ final TextStyle? KTitle1 = TextStyle(
   color: Colors.black,
 );
 final TextStyle? KonBoardingTextStyle = TextStyle(fontSize: 16.sp);
+final TextStyle? KHeadline1 = TextStyle(
+  fontSize: 35.sp,
+  fontWeight: FontWeight.bold,
+  color: Colors.black,
+);

@@ -1,4 +1,5 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -41,21 +42,10 @@ class SignUpScreen extends StatelessWidget {
                   animType: AnimType.SCALE,
                   dialogType: DialogType.SUCCES,
                   title: 'Success',
-                  desc:
-                      'You will shortly receive an email to setup a new password',
-                  btnOkOnPress: () {},
-                ).show();
-
-                context.read<SignUpValidationCubit>().endSubmit();
-              } else if (state is AuthenticationError) {
-                AwesomeDialog(
-                  context: context,
-                  animType: AnimType.SCALE,
-                  dialogType: DialogType.SUCCES,
-                  title: 'Your password has been reset',
-                  desc:
-                      'You will shortly receive an email to setup a new password',
-                  btnOkOnPress: () {},
+                  desc: 'Your email has been created.',
+                  btnOkOnPress: () {
+                    Navigator.of(context).pop();
+                  },
                 ).show();
 
                 context.read<SignUpValidationCubit>().endSubmit();
@@ -132,7 +122,9 @@ class SignUpScreen extends StatelessWidget {
                         style: TextStyle(fontSize: 18.sp, color: Colors.grey),
                       ),
                       TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
                         child: Text(
                           'Sign In',
                           style: TextStyle(
@@ -151,7 +143,10 @@ class SignUpScreen extends StatelessWidget {
                   ),
                   GoogleOutLinedButton(
                     text: 'Sign Up With Google',
-                    onPressed: () {},
+                    onPressed: () async {
+                      await BlocProvider.of<AuthenticationCubit>(context)
+                          .logInWithGoogle();
+                    },
                   ),
                 ],
               ),
