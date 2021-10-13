@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_app/presentation/screens/changePassword/change_passworrd_screen.dart';
 
 import 'package:food_app/presentation/screens/home/home_screen.dart';
 import 'package:food_app/presentation/screens/landing/landing_page.dart';
@@ -16,6 +17,7 @@ class AppRouter {
   static const String landingScreen = '/';
   static const String signUpScreen = '/sign-up';
   static const String paymentScreen = '/payment-screen';
+  static const String changePasswordScreen = '/change-password-screen';
   Route? onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       case landingScreen:
@@ -33,6 +35,9 @@ class AppRouter {
         return MaterialPageRoute(builder: (context) => const SignUpScreen());
       case paymentScreen:
         return MaterialPageRoute(builder: (context) => const PaymentScreen());
+      case changePasswordScreen:
+        return MaterialPageRoute(
+            builder: (context) => const ChangePasswordScreen());
     }
   }
 }

@@ -11,6 +11,7 @@ import 'package:food_app/logic/cubit/forgotPassword/forgot_password_cubit.dart';
 import 'package:food_app/logic/cubit/theme/theme_cubit.dart';
 import 'package:food_app/logic/debug/app_bloc_observer.dart';
 import 'package:food_app/presentation/routes/app_router.dart';
+import 'package:food_app/presentation/screens/changePassword/change_passworrd_screen.dart';
 import 'package:food_app/presentation/screens/payment/payment_screen.dart';
 
 import 'constants/styles.dart';
