@@ -15,6 +15,7 @@ class CustomTextField extends StatelessWidget {
     this.controller,
     this.textInputAction,
     this.obscureText,
+    this.prefixIcon,
   }) : super(key: key);
 
   final String hint;
@@ -27,6 +28,7 @@ class CustomTextField extends StatelessWidget {
   final TextInputType? keyboardType;
   final TextInputAction? textInputAction;
   final bool? obscureText;
+  final Widget? prefixIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -58,6 +60,7 @@ class CustomTextField extends StatelessWidget {
             fontSize: 16.h,
           ),
           suffixIcon: suffixIcon,
+          prefixIcon: prefixIcon,
           suffixIconConstraints: const BoxConstraints(),
           contentPadding: EdgeInsets.fromLTRB(
             0,
