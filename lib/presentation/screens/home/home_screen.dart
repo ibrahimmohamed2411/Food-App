@@ -1,30 +1,108 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:food_app/data/services/fire_store_service.dart';
+import 'package:food_app/constants/colors.dart';
+import 'package:food_app/presentation/widgets/custom_card.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
+  final double _minValue = 8.0;
+
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 8,
-      child: Scaffold(
-        body: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: CustomScrollView(
-            slivers: [
+    final textTheme = Theme.of(context).textTheme;
+
+    return Scaffold(
+      body: DefaultTabController(
+        length: 5,
+        child: SafeArea(
+          child: NestedScrollView(
+            body: TabBarView(
+              children: [
+                ListView.builder(
+                  itemBuilder: (context, index) => Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: SizedBox(
+                      height: 216,
+                      child: LayoutBuilder(
+                        builder: (context, constrains) {
+                          return Stack(
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    left: (constrains.maxWidth / 4) + 10),
+                                child: CustomCard(
+                                  mainAxisSize: MainAxisSize.max,
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
+                                  padding: EdgeInsets.only(
+                                      right: 15,
+                                      top: 30,
+                                      left: constrains.maxWidth / 4,
+                                      bottom: 15),
+                                  children: [
+                                    Text(
+                                      'Pumpkin Soup',
+                                      style:
+                                          Theme.of(context).textTheme.headline3,
+                                    ),
+                                    SizedBox(
+                                      height: 20,
+                                    ),
+                                    Text(
+                                      'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+                                      maxLines: 3,
+                                      style:
+                                          Theme.of(context).textTheme.subtitle1,
+                                    ),
+                                    SizedBox(
+                                      height: 30,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          '\$9.25',
+                                          style: TextStyle(
+                                              color: KPrimary, fontSize: 16),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Container(
+                                  width: constrains.maxWidth / 2,
+                                  height: constrains.maxHeight * 4 / 5,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(30),
+                                    image: const DecorationImage(
+                                      image: AssetImage(
+                                        'assets/images/pumpkin_soup.jpeg',
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+                Text("Page 2"),
+                Text("Page 3"),
+                Text("Page 4"),
+                Text("Page 5")
+              ],
+            ),
+            headerSliverBuilder:
+                (BuildContext context, bool innerBoxIsScrolled) => [
               SliverAppBar(
+                backgroundColor: Colors.grey[100],
                 leading: const Icon(Icons.list),
                 foregroundColor: Colors.black,
                 actions: const [
@@ -33,8 +111,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 expandedHeight: 350,
                 elevation: 0.0,
                 pinned: true,
-                stretch: true,
-                backgroundColor: Colors.white,
                 flexibleSpace: FlexibleSpaceBar(
                   background: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -56,11 +132,12 @@ class _HomeScreenState extends State<HomeScreen> {
                           height: 30,
                         ),
                         Container(
+                          margin: EdgeInsets.only(bottom: 30),
                           height: 60,
                           padding: const EdgeInsets.only(left: 30),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(50),
-                            color: Colors.grey[100],
+                            color: Colors.grey[300],
                           ),
                           child: Row(
                             children: const [
@@ -85,68 +162,43 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                 ),
-                bottom: const TabBar(
-                  padding: EdgeInsetsDirectional.only(start: 50),
-                  isScrollable: true,
-                  labelColor: Colors.grey,
-                  indicatorColor: Color(0xFFFA4A0C),
-                  tabs: [
-                    Tab(text: "Tab1"),
-                    Tab(text: "Tab2"),
-                    Tab(text: "Tab3"),
-                    Tab(text: "Tab4"),
-                    Tab(text: "Tab1"),
-                    Tab(text: "Tab2"),
-                    Tab(text: "Tab3"),
-                    Tab(text: "Tab4"),
-                  ],
-                ),
-              ),
-              SliverList(
-                delegate: SliverChildListDelegate(
-                  [
-                    SizedBox(
-                      height: 500,
-                      child: TabBarView(
-                        children: [
-                          StreamBuilder(
-                            builder: (ctx,
-                                AsyncSnapshot<
-                                        QuerySnapshot<Map<String, dynamic>>>
-                                    snap) {
-                              if (snap.hasError) {
-                                return Text('Error');
-                              }
-                              if (snap.hasData) {
-                                return ListView.builder(
-                                  //shrinkWrap: true,
-                                  itemBuilder: (ctx, index) =>
-                                      Text(snap.data!.docs[index]['id']),
-                                  itemCount: snap.data!.docs.length,
-                                );
-                              }
-                              return CircularProgressIndicator.adaptive();
-                            },
-                            stream: FirebaseFirestore.instance
-                                .collection('products')
-                                .snapshots(),
-                          ),
-                          Center(child: Text('2')),
-                          Center(child: Text('3')),
-                          Center(child: Text('4')),
-                          Center(child: Text('5')),
-                          Center(child: Text('6')),
-                          Center(child: Text('7')),
-                          Center(child: Text('8')),
-                        ],
-// controller: controller,
+                bottom: TabBar(
+                    padding: EdgeInsetsDirectional.only(start: 50),
+                    isScrollable: true,
+                    labelColor: Colors.grey,
+                    indicatorColor: Color(0xFFFA4A0C),
+                    tabs: [
+                      Tab(
+                        child: Text(
+                          "All",
+                          style: textTheme.subtitle2,
+                        ),
                       ),
-                    ),
-                    // SizedBox(
-                    //   height: 500,
-                    // ),
-                  ],
-                ),
+                      Tab(
+                        child: Text(
+                          "Categories",
+                          style: textTheme.subtitle2,
+                        ),
+                      ),
+                      Tab(
+                        child: Text(
+                          "Upcoming",
+                          style: textTheme.subtitle2,
+                        ),
+                      ),
+                      Tab(
+                        child: Text(
+                          "Categories",
+                          style: textTheme.subtitle2,
+                        ),
+                      ),
+                      Tab(
+                        child: Text(
+                          "Upcoming",
+                          style: textTheme.subtitle2,
+                        ),
+                      ),
+                    ]),
               ),
             ],
           ),

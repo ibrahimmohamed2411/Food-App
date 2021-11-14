@@ -11,7 +11,7 @@ import 'package:food_app/logic/cubit/authentication/authentication_cubit.dart';
 import 'package:food_app/logic/cubit/forgotPassword/forgot_password_cubit.dart';
 import 'package:food_app/logic/cubit/theme/theme_cubit.dart';
 import 'package:food_app/logic/debug/app_bloc_observer.dart';
-import 'package:food_app/presentation/screens/test2_screen.dart';
+import 'package:food_app/presentation/screens/home/home_screen.dart';
 
 import 'logic/cubit/signInValidation/sign_in_validation_cubit.dart';
 import 'logic/cubit/signUpValidation/sign_up_validation_cubit.dart';
@@ -96,7 +96,7 @@ class FoodApp extends StatelessWidget {
               ),
               darkTheme: ThemeData.dark(),
               themeMode: state ? ThemeMode.dark : ThemeMode.light,
-              home: AppView(),
+              home: const HomeScreen(),
               // onGenerateRoute: AppRouter.onGenerateRoute,
               // initialRoute: AppRouter.testScreen,
             );
