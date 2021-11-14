@@ -3,8 +3,6 @@ import 'package:food_app/constants/colors.dart';
 import 'package:food_app/presentation/widgets/custom_card.dart';
 
 class HomeScreen extends StatelessWidget {
-  final double _minValue = 8.0;
-
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
@@ -19,78 +17,9 @@ class HomeScreen extends StatelessWidget {
             body: TabBarView(
               children: [
                 ListView.builder(
-                  itemBuilder: (context, index) => Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: SizedBox(
-                      height: 216,
-                      child: LayoutBuilder(
-                        builder: (context, constrains) {
-                          return Stack(
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.only(
-                                    left: (constrains.maxWidth / 4) + 10),
-                                child: CustomCard(
-                                  mainAxisSize: MainAxisSize.max,
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.stretch,
-                                  padding: EdgeInsets.only(
-                                      right: 15,
-                                      top: 30,
-                                      left: constrains.maxWidth / 4,
-                                      bottom: 15),
-                                  children: [
-                                    Text(
-                                      'Pumpkin Soup',
-                                      style:
-                                          Theme.of(context).textTheme.headline3,
-                                    ),
-                                    SizedBox(
-                                      height: 20,
-                                    ),
-                                    Text(
-                                      'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-                                      maxLines: 3,
-                                      style:
-                                          Theme.of(context).textTheme.subtitle1,
-                                    ),
-                                    SizedBox(
-                                      height: 30,
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          '\$9.25',
-                                          style: TextStyle(
-                                              color: KPrimary, fontSize: 16),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: Container(
-                                  width: constrains.maxWidth / 2,
-                                  height: constrains.maxHeight * 4 / 5,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(30),
-                                    image: const DecorationImage(
-                                      image: AssetImage(
-                                        'assets/images/pumpkin_soup.jpeg',
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          );
-                        },
-                      ),
-                    ),
+                  itemBuilder: (context, index) => const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    child: DishCard(),
                   ),
                 ),
                 Text("Page 2"),
@@ -203,6 +132,80 @@ class HomeScreen extends StatelessWidget {
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class DishCard extends StatelessWidget {
+  const DishCard({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 216,
+      child: LayoutBuilder(
+        builder: (context, constrains) {
+          return Stack(
+            children: [
+              Padding(
+                padding: EdgeInsets.only(left: (constrains.maxWidth / 4) + 10),
+                child: CustomCard(
+                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  padding: EdgeInsets.only(
+                      right: 15,
+                      top: 30,
+                      left: constrains.maxWidth / 4,
+                      bottom: 15),
+                  children: [
+                    Text(
+                      'Pumpkin Soup',
+                      style: Theme.of(context).textTheme.headline3,
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+                      maxLines: 3,
+                      style: Theme.of(context).textTheme.subtitle1,
+                    ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: const [
+                        Text(
+                          '\$9.25',
+                          style: TextStyle(color: KPrimary, fontSize: 16),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Container(
+                  width: constrains.maxWidth / 2,
+                  height: constrains.maxHeight * 4 / 5,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    image: const DecorationImage(
+                      image: AssetImage(
+                        'assets/images/pumpkin_soup.jpeg',
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }
