@@ -8,7 +8,6 @@ import 'package:food_app/presentation/screens/signIn/sign_in_screen.dart';
 import 'package:food_app/presentation/screens/signUp/sign_up_screen.dart';
 import 'package:food_app/presentation/screens/forgotPassword/forgot_password_screen.dart';
 import 'package:food_app/presentation/screens/OTP/otp_screen.dart';
-import 'package:food_app/presentation/screens/test_screen.dart';
 
 class AppRouter {
   static const String signInScreen = '/sign-in-screen';
@@ -41,8 +40,8 @@ class AppRouter {
       case editProfileScreen:
         return MaterialPageRoute(
             builder: (context) => const EditProfileScreen());
-      case testScreen:
-        return MaterialPageRoute(builder: (context) => const TestScreen());
+      // case testScreen:
+      //   return MaterialPageRoute(builder: (context) => const TestScreen());
     }
   }
 }

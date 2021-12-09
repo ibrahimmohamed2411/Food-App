@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:food_app/constants/colors.dart';
-import 'package:food_app/presentation/widgets/custom_card.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:food_app/data/models/products.dart';
+import 'package:food_app/logic/cubit/products/products_cubit.dart';
+import 'package:food_app/presentation/screens/home/widgets/dish_card.dart';
 
 class HomeScreen extends StatelessWidget {
+  final double _minValue = 8.0;
+
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
@@ -11,21 +15,78 @@ class HomeScreen extends StatelessWidget {
 
     return Scaffold(
       body: DefaultTabController(
-        length: 5,
+        length: 4,
         child: SafeArea(
           child: NestedScrollView(
             body: TabBarView(
               children: [
-                ListView.builder(
-                  itemBuilder: (context, index) => const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
-                    child: DishCard(),
-                  ),
-                ),
-                Text("Page 2"),
-                Text("Page 3"),
-                Text("Page 4"),
-                Text("Page 5")
+                BlocBuilder<ProductsCubit, ProductsState>(
+                    builder: (ctx, state) {
+                  if (state is ProductsLoaded) {
+                    return Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      child: ListView.builder(
+                        itemBuilder: (context, index) => DishCard(
+                          product: state.products.foodProducts[index],
+                        ),
+                        itemCount: state.products.foodProducts.length,
+                      ),
+                    );
+                  }
+                  if (state is Error) {
+                    return const Text('Error');
+                  }
+                  return const Center(
+                      child: CircularProgressIndicator.adaptive());
+                }),
+                BlocBuilder<ProductsCubit, ProductsState>(
+                    builder: (ctx, state) {
+                  if (state is ProductsLoaded) {
+                    return ListView.builder(
+                      itemBuilder: (context, index) => DishCard(
+                        product: state.products.drinkProducts[index],
+                      ),
+                      itemCount: state.products.drinkProducts.length,
+                    );
+                  }
+                  if (state is Error) {
+                    return const Text('Error');
+                  }
+                  return const Center(
+                      child: CircularProgressIndicator.adaptive());
+                }),
+                BlocBuilder<ProductsCubit, ProductsState>(
+                    builder: (ctx, state) {
+                  if (state is ProductsLoaded) {
+                    return ListView.builder(
+                      itemBuilder: (context, index) => DishCard(
+                        product: state.products.snackProducts[index],
+                      ),
+                      itemCount: state.products.snackProducts.length,
+                    );
+                  }
+                  if (state is Error) {
+                    return const Text('Error');
+                  }
+                  return const Center(
+                      child: CircularProgressIndicator.adaptive());
+                }),
+                BlocBuilder<ProductsCubit, ProductsState>(
+                    builder: (ctx, state) {
+                  if (state is ProductsLoaded) {
+                    return ListView.builder(
+                      itemBuilder: (context, index) => DishCard(
+                        product: state.products.sauceProducts[index],
+                      ),
+                      itemCount: state.products.sauceProducts.length,
+                    );
+                  }
+                  if (state is Error) {
+                    return const Text('Error');
+                  }
+                  return const Center(
+                      child: CircularProgressIndicator.adaptive());
+                }),
               ],
             ),
             headerSliverBuilder:
@@ -66,7 +127,7 @@ class HomeScreen extends StatelessWidget {
                           padding: const EdgeInsets.only(left: 30),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(50),
-                            color: Colors.grey[300],
+                            color: Colors.grey[100],
                           ),
                           child: Row(
                             children: const [
@@ -92,120 +153,38 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
                 bottom: TabBar(
-                    padding: EdgeInsetsDirectional.only(start: 50),
-                    isScrollable: true,
-                    labelColor: Colors.grey,
-                    indicatorColor: Color(0xFFFA4A0C),
-                    tabs: [
-                      Tab(
-                        child: Text(
-                          "All",
-                          style: textTheme.subtitle2,
-                        ),
+                  padding: const EdgeInsetsDirectional.only(start: 50),
+                  isScrollable: true,
+                  labelColor: const Color(0xFFFA4A0C),
+                  indicatorColor: const Color(0xFFFA4A0C),
+                  unselectedLabelColor: textTheme.subtitle2!.color,
+                  tabs: const [
+                    Tab(
+                      child: Text(
+                        "Foods",
                       ),
-                      Tab(
-                        child: Text(
-                          "Categories",
-                          style: textTheme.subtitle2,
-                        ),
-                      ),
-                      Tab(
-                        child: Text(
-                          "Upcoming",
-                          style: textTheme.subtitle2,
-                        ),
-                      ),
-                      Tab(
-                        child: Text(
-                          "Categories",
-                          style: textTheme.subtitle2,
-                        ),
-                      ),
-                      Tab(
-                        child: Text(
-                          "Upcoming",
-                          style: textTheme.subtitle2,
-                        ),
-                      ),
-                    ]),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class DishCard extends StatelessWidget {
-  const DishCard({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 216,
-      child: LayoutBuilder(
-        builder: (context, constrains) {
-          return Stack(
-            children: [
-              Padding(
-                padding: EdgeInsets.only(left: (constrains.maxWidth / 4) + 10),
-                child: CustomCard(
-                  mainAxisSize: MainAxisSize.max,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  padding: EdgeInsets.only(
-                      right: 15,
-                      top: 30,
-                      left: constrains.maxWidth / 4,
-                      bottom: 15),
-                  children: [
-                    Text(
-                      'Pumpkin Soup',
-                      style: Theme.of(context).textTheme.headline3,
                     ),
-                    const SizedBox(
-                      height: 20,
+                    Tab(
+                      child: Text(
+                        "Drinks",
+                      ),
                     ),
-                    Text(
-                      'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-                      maxLines: 3,
-                      style: Theme.of(context).textTheme.subtitle1,
+                    Tab(
+                      child: Text(
+                        "Snacks",
+                      ),
                     ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: const [
-                        Text(
-                          '\$9.25',
-                          style: TextStyle(color: KPrimary, fontSize: 16),
-                        ),
-                      ],
+                    Tab(
+                      child: Text(
+                        "Sauce",
+                      ),
                     ),
                   ],
                 ),
               ),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Container(
-                  width: constrains.maxWidth / 2,
-                  height: constrains.maxHeight * 4 / 5,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
-                    image: const DecorationImage(
-                      image: AssetImage(
-                        'assets/images/pumpkin_soup.jpeg',
-                      ),
-                    ),
-                  ),
-                ),
-              ),
             ],
-          );
-        },
+          ),
+        ),
       ),
     );
   }
