@@ -23,7 +23,7 @@ class AppRouter {
   static Route? onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       case landingScreen:
-        return MaterialPageRoute(builder: (context) => const LandingPage());
+        return MaterialPageRoute(builder: (context) =>  const LandingPage());
       case signInScreen:
         return MaterialPageRoute(builder: (context) => const SignInScreen());
       case otpScreen:

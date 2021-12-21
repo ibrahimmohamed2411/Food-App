@@ -29,7 +29,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   ProductsRepository().geProducts();
-  Bloc.observer = AppBlocObserver();
+  BlocOverrides.runZoned(() {}, blocObserver: AppBlocObserver());
   runApp(
     FoodApp(appRouter: AppRouter()),
   );
@@ -74,7 +74,31 @@ class FoodApp extends StatelessWidget {
                 primaryColor: KPrimary,
                 scaffoldBackgroundColor: KScaffoldColor,
                 textTheme: TextTheme(
-                  headline1: KHeadline1,
+                  headline1: TextStyle(
+                    fontSize: 36.sp,
+                    color: const Color(0XFF3D454F),
+                    fontWeight: FontWeight.w800,
+                  ),
+                  headline2: TextStyle(
+                    fontSize: 22.sp,
+                    color: const Color(0XFF3D454F),
+                    fontWeight: FontWeight.w600,
+                  ),
+                  headline3: TextStyle(
+                    fontSize: 20.sp,
+                    color: const Color(0XFF3D454F),
+                    fontWeight: FontWeight.w700,
+                  ),
+                  headline4: TextStyle(
+                    fontSize: 18.sp,
+                    color: const Color(0XFF3D454F),
+                  ),
+                  subtitle1: TextStyle(
+                      fontSize: 14.sp,
+                      color: Colors.grey,
+                      wordSpacing: 2,
+                      overflow: TextOverflow.ellipsis,
+                      height: 1.4),
                 ),
               ),
               darkTheme: ThemeData.dark(),

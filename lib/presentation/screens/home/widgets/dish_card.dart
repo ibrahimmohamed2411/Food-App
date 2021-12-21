@@ -31,7 +31,7 @@ class DishCard extends StatelessWidget {
                   children: [
                     Text(
                       product.title,
-                      style: Theme.of(context).textTheme.headline3,
+                      style: Theme.of(context).textTheme.bodyText1,
                     ),
                     const SizedBox(
                       height: 20,
