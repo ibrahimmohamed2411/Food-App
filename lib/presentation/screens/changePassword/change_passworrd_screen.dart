@@ -1,13 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:food_app/constants/colors.dart';
 import 'package:food_app/constants/styles.dart';
 import 'package:food_app/presentation/widgets/custom_card.dart';
 import 'package:food_app/presentation/widgets/custom_modal_bottom_sheet.dart';
 import 'package:food_app/presentation/widgets/custom_outlined_button.dart';
 import 'package:food_app/presentation/widgets/custom_text_field.dart';
-import 'package:food_app/presentation/widgets/loading_bottom_sheet.dart';
 
 class ChangePasswordScreen extends StatelessWidget {
   const ChangePasswordScreen({Key? key}) : super(key: key);
@@ -41,7 +39,7 @@ class ChangePasswordScreen extends StatelessWidget {
                   },
                   suffixIcon: IconButton(
                     onPressed: () {},
-                    icon: Icon(Icons.visibility_off),
+                    icon: const Icon(Icons.visibility_off),
                   ),
                   keyboardType: TextInputType.visiblePassword,
                   obscureText: true,
@@ -57,7 +55,7 @@ class ChangePasswordScreen extends StatelessWidget {
                   },
                   suffixIcon: IconButton(
                     onPressed: () {},
-                    icon: Icon(Icons.visibility_off),
+                    icon: const Icon(Icons.visibility_off),
                   ),
                   keyboardType: TextInputType.visiblePassword,
                   obscureText: true,
@@ -71,7 +69,7 @@ class ChangePasswordScreen extends StatelessWidget {
             CustomOutlinedButton(
               text: 'Update Password',
               primaryColor: Colors.white,
-              backgroundColor: KPrimary,
+              backgroundColor: Theme.of(context).primaryColor,
               borderColor: Colors.white,
               onPressed: () {
                 loadingModalSheet(context);
@@ -83,7 +81,7 @@ class ChangePasswordScreen extends StatelessWidget {
                 'Cancel',
                 style: TextStyle(
                   fontSize: 20.sp,
-                  color: KPrimary,
+                  color: Theme.of(context).primaryColor,
                 ),
               ),
             ),

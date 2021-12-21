@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:food_app/constants/colors.dart';
 import 'package:food_app/presentation/routes/app_router.dart';
 import 'package:food_app/presentation/widgets/custom_card.dart';
 import 'package:food_app/presentation/widgets/menu_item.dart';

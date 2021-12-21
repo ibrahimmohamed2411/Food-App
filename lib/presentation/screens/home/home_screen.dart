@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food_app/constants/colors.dart';
-import 'package:food_app/presentation/widgets/custom_card.dart';
+import 'package:food_app/presentation/widgets/dish_card.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -22,10 +21,10 @@ class HomeScreen extends StatelessWidget {
                     child: DishCard(),
                   ),
                 ),
-                Text("Page 2"),
-                Text("Page 3"),
-                Text("Page 4"),
-                Text("Page 5")
+                const Text("Page 2"),
+                const Text("Page 3"),
+                const Text("Page 4"),
+                const Text("Page 5")
               ],
             ),
             headerSliverBuilder:
@@ -92,120 +91,47 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
                 bottom: TabBar(
-                    padding: EdgeInsetsDirectional.only(start: 50),
-                    isScrollable: true,
-                    labelColor: Colors.grey,
-                    indicatorColor: Color(0xFFFA4A0C),
-                    tabs: [
-                      Tab(
-                        child: Text(
-                          "All",
-                          style: textTheme.subtitle2,
-                        ),
+                  padding: const EdgeInsetsDirectional.only(start: 50),
+                  isScrollable: true,
+                  labelColor: Colors.grey,
+                  indicatorColor: Color(0xFFFA4A0C),
+                  tabs: [
+                    Tab(
+                      child: Text(
+                        "All",
+                        style: textTheme.subtitle2,
                       ),
-                      Tab(
-                        child: Text(
-                          "Categories",
-                          style: textTheme.subtitle2,
-                        ),
-                      ),
-                      Tab(
-                        child: Text(
-                          "Upcoming",
-                          style: textTheme.subtitle2,
-                        ),
-                      ),
-                      Tab(
-                        child: Text(
-                          "Categories",
-                          style: textTheme.subtitle2,
-                        ),
-                      ),
-                      Tab(
-                        child: Text(
-                          "Upcoming",
-                          style: textTheme.subtitle2,
-                        ),
-                      ),
-                    ]),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class DishCard extends StatelessWidget {
-  const DishCard({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 216,
-      child: LayoutBuilder(
-        builder: (context, constrains) {
-          return Stack(
-            children: [
-              Padding(
-                padding: EdgeInsets.only(left: (constrains.maxWidth / 4) + 10),
-                child: CustomCard(
-                  mainAxisSize: MainAxisSize.max,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  padding: EdgeInsets.only(
-                      right: 15,
-                      top: 30,
-                      left: constrains.maxWidth / 4,
-                      bottom: 15),
-                  children: [
-                    Text(
-                      'Pumpkin Soup',
-                      style: Theme.of(context).textTheme.headline3,
                     ),
-                    const SizedBox(
-                      height: 20,
+                    Tab(
+                      child: Text(
+                        "Categories",
+                        style: textTheme.subtitle2,
+                      ),
                     ),
-                    Text(
-                      'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-                      maxLines: 3,
-                      style: Theme.of(context).textTheme.subtitle1,
+                    Tab(
+                      child: Text(
+                        "Upcoming",
+                        style: textTheme.subtitle2,
+                      ),
                     ),
-                    const SizedBox(
-                      height: 30,
+                    Tab(
+                      child: Text(
+                        "Categories",
+                        style: textTheme.subtitle2,
+                      ),
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: const [
-                        Text(
-                          '\$9.25',
-                          style: TextStyle(color: KPrimary, fontSize: 16),
-                        ),
-                      ],
+                    Tab(
+                      child: Text(
+                        "Upcoming",
+                        style: textTheme.subtitle2,
+                      ),
                     ),
                   ],
                 ),
               ),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Container(
-                  width: constrains.maxWidth / 2,
-                  height: constrains.maxHeight * 4 / 5,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
-                    image: const DecorationImage(
-                      image: AssetImage(
-                        'assets/images/pumpkin_soup.jpeg',
-                      ),
-                    ),
-                  ),
-                ),
-              ),
             ],
-          );
-        },
+          ),
+        ),
       ),
     );
   }

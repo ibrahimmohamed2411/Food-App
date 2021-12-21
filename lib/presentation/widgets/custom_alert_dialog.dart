@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:food_app/constants/colors.dart';
 
 import 'custom_outlined_button.dart';
 
@@ -29,18 +28,18 @@ Future<bool?> customAlertDialog(BuildContext context) async {
           ),
           CustomOutlinedButton(
             text: 'Login Out',
-            primaryColor: KPrimary,
+            primaryColor: Theme.of(context).primaryColor,
             onPressed: () {
               Navigator.of(context).pop(true);
             },
-            borderColor: KPrimary,
+            borderColor: Theme.of(context).primaryColor,
           ),
           SizedBox(
             height: 10.h,
           ),
           CustomOutlinedButton(
-            backgroundColor: KPrimary,
-            borderColor: KPrimary,
+            backgroundColor: Theme.of(context).primaryColor,
+            borderColor: Theme.of(context).primaryColor,
             primaryColor: Colors.white,
             text: 'Cancel',
             onPressed: () {

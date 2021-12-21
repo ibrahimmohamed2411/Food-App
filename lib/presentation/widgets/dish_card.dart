@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'package:food_app/data/models/products.dart';
-import 'package:food_app/presentation/widgets/custom_card.dart';
+import 'custom_card.dart';
 
 class DishCard extends StatelessWidget {
-  final Product product;
-
   const DishCard({
     Key? key,
-    required this.product,
   }) : super(key: key);
 
   @override
@@ -31,14 +27,14 @@ class DishCard extends StatelessWidget {
                       bottom: 15),
                   children: [
                     Text(
-                      product.title,
-                      style: Theme.of(context).textTheme.bodyText1,
+                      'Pumpkin Soup',
+                      style: Theme.of(context).textTheme.headline3,
                     ),
                     const SizedBox(
                       height: 20,
                     ),
                     Text(
-                      product.description,
+                      'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
                       maxLines: 3,
                       style: Theme.of(context).textTheme.subtitle1,
                     ),
@@ -49,7 +45,7 @@ class DishCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          '\$${product.price}',
+                          '\$9.25',
                           style: TextStyle(
                               color: Theme.of(context).primaryColor,
                               fontSize: 16),
@@ -66,9 +62,9 @@ class DishCard extends StatelessWidget {
                   height: constrains.maxHeight * 4 / 5,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(30),
-                    image: DecorationImage(
-                      image: NetworkImage(
-                        product.imageUrl,
+                    image: const DecorationImage(
+                      image: AssetImage(
+                        'assets/images/pumpkin_soup.jpeg',
                       ),
                     ),
                   ),

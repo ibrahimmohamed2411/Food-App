@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food_app/constants/colors.dart';
+import 'package:food_app/constants/pallete.dart';
 
 import 'custom_card.dart';
 import 'custom_outlined_button.dart';
@@ -18,6 +18,7 @@ class ImagePickerBottomSheet extends StatefulWidget {
 
 class _ImagePickerBottomSheetState extends State<ImagePickerBottomSheet> {
   PhotoSource? photoSource;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -40,8 +41,9 @@ class _ImagePickerBottomSheetState extends State<ImagePickerBottomSheet> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     CustomCard(
-                      backgroundColor:
-                          photoSource == PhotoSource.camera ? KPrimary : null,
+                      backgroundColor: photoSource == PhotoSource.camera
+                          ? Palette.primary
+                          : null,
                       onTap: () {
                         setState(() {
                           photoSource = PhotoSource.camera;
@@ -53,7 +55,7 @@ class _ImagePickerBottomSheetState extends State<ImagePickerBottomSheet> {
                           size: 50,
                           color: photoSource == PhotoSource.camera
                               ? Colors.white
-                              : KPrimary,
+                              : Palette.primary,
                         ),
                         const SizedBox(
                           height: 15,
@@ -73,8 +75,9 @@ class _ImagePickerBottomSheetState extends State<ImagePickerBottomSheet> {
                       width: 15,
                     ),
                     CustomCard(
-                      backgroundColor:
-                          photoSource == PhotoSource.gallery ? KPrimary : null,
+                      backgroundColor: photoSource == PhotoSource.gallery
+                          ? Palette.primary
+                          : null,
                       onTap: () {
                         setState(() {
                           photoSource = PhotoSource.gallery;
@@ -86,9 +89,9 @@ class _ImagePickerBottomSheetState extends State<ImagePickerBottomSheet> {
                           size: 50,
                           color: photoSource == PhotoSource.gallery
                               ? Colors.white
-                              : KPrimary,
+                              : Palette.primary,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 15,
                         ),
                         Text(
@@ -106,12 +109,12 @@ class _ImagePickerBottomSheetState extends State<ImagePickerBottomSheet> {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
             CustomOutlinedButton(
-              primaryColor: KPrimary,
-              borderColor: KPrimary,
+              primaryColor: Palette.primary,
+              borderColor: Palette.primary,
               text: 'Cancel',
               onPressed: () {
                 Navigator.of(context).pop();

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:food_app/constants/colors.dart';
+import 'package:food_app/constants/pallete.dart';
 
 class CustomTextField extends StatelessWidget {
   const CustomTextField({
@@ -56,7 +56,7 @@ class CustomTextField extends StatelessWidget {
             fontSize: 14.h,
           ),
           hintStyle: TextStyle(
-            color: KUnFocusTextFieldColor,
+            color: Palette.inFocusTextFieldColor,
             fontSize: 16.h,
           ),
           suffixIcon: suffixIcon,
@@ -73,7 +73,8 @@ class CustomTextField extends StatelessWidget {
                 BorderSide(color: Theme.of(context).primaryColor, width: 1.5),
           ),
           enabledBorder: const UnderlineInputBorder(
-            borderSide: BorderSide(color: KUnFocusTextFieldColor, width: 1.5),
+            borderSide:
+                BorderSide(color: Palette.inFocusTextFieldColor, width: 1.5),
           ),
         ),
       ),
