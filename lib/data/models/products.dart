@@ -8,6 +8,7 @@ class Products {
 
   Products.fromJson(List<QueryDocumentSnapshot<Object?>> json) {
     for (var product in json) {
+
       if (product['category'] == 'food') {
         foodProducts.add(Product.fromJson(product));
       } else if (product['category'] == 'drinks') {

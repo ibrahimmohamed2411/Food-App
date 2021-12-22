@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:food_app/data/models/products.dart';
 import 'package:food_app/presentation/widgets/custom_card.dart';
@@ -14,7 +15,7 @@ class DishCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 216,
+      height: 164.h,
       child: LayoutBuilder(
         builder: (context, constrains) {
           return Stack(
@@ -25,26 +26,24 @@ class DishCard extends StatelessWidget {
                   mainAxisSize: MainAxisSize.max,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   padding: EdgeInsets.only(
-                      right: 15,
-                      top: 30,
+                      right: 15.w,
+                      top: 30.h,
                       left: constrains.maxWidth / 4,
-                      bottom: 15),
+                      bottom: 15.h),
                   children: [
                     Text(
                       product.title,
-                      style: Theme.of(context).textTheme.bodyText1,
+                      style: Theme.of(context).textTheme.headline3,
                     ),
-                    const SizedBox(
-                      height: 20,
+                    SizedBox(
+                      height: 5.h,
                     ),
                     Text(
                       product.description,
                       maxLines: 3,
                       style: Theme.of(context).textTheme.subtitle1,
                     ),
-                    const SizedBox(
-                      height: 30,
-                    ),
+                    const Spacer(),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -52,7 +51,7 @@ class DishCard extends StatelessWidget {
                           '\$${product.price}',
                           style: TextStyle(
                               color: Theme.of(context).primaryColor,
-                              fontSize: 16),
+                              fontSize: 16.sp),
                         ),
                       ],
                     ),
@@ -65,8 +64,9 @@ class DishCard extends StatelessWidget {
                   width: constrains.maxWidth / 2,
                   height: constrains.maxHeight * 4 / 5,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
+                    borderRadius: BorderRadius.circular(5.r),
                     image: DecorationImage(
+                      fit: BoxFit.fill,
                       image: NetworkImage(
                         product.imageUrl,
                       ),

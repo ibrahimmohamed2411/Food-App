@@ -7,7 +7,9 @@ part 'products_state.dart';
 
 class ProductsCubit extends Cubit<ProductsState> {
   final ProductsRepository _productsRepository = ProductsRepository();
+
   ProductsCubit() : super(ProductsInitial());
+
   void getProducts() async {
     try {
       Products products = await _productsRepository.geProducts();

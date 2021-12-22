@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:food_app/presentation/screens/editProfile/edit_profile_screen.dart';
 
 import 'package:food_app/presentation/screens/home/home_screen.dart';
+import 'package:food_app/presentation/screens/home/home_screen2.dart';
 import 'package:food_app/presentation/screens/landing/landing_page.dart';
 import 'package:food_app/presentation/screens/profile/profile_screen.dart';
 import 'package:food_app/presentation/screens/signIn/sign_in_screen.dart';
 import 'package:food_app/presentation/screens/signUp/sign_up_screen.dart';
 import 'package:food_app/presentation/screens/forgotPassword/forgot_password_screen.dart';
 import 'package:food_app/presentation/screens/OTP/otp_screen.dart';
+import 'package:food_app/presentation/screens/test_screen.dart';
 
 class AppRouter {
   static const String signInScreen = '/sign-in-screen';
@@ -32,7 +34,7 @@ class AppRouter {
         return MaterialPageRoute(
             builder: (context) => const ForgotPasswordScreen());
       case homeScreen:
-        return MaterialPageRoute(builder: (context) => const HomeScreen());
+        return MaterialPageRoute(builder: (context) => const HomeScreen2());
       case signUpScreen:
         return MaterialPageRoute(builder: (context) => const SignUpScreen());
       case profileScreen:
@@ -40,8 +42,8 @@ class AppRouter {
       case editProfileScreen:
         return MaterialPageRoute(
             builder: (context) => const EditProfileScreen());
-      // case testScreen:
-      //   return MaterialPageRoute(builder: (context) => const TestScreen());
+      case testScreen:
+        return MaterialPageRoute(builder: (context) => const TestScreen());
     }
   }
 }

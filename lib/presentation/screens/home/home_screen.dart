@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:food_app/presentation/widgets/dish_card.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:food_app/logic/cubit/products/products_cubit.dart';
+import 'package:food_app/presentation/screens/home/widgets/dish_card.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -10,21 +13,81 @@ class HomeScreen extends StatelessWidget {
 
     return Scaffold(
       body: DefaultTabController(
-        length: 5,
+        length: 4,
         child: SafeArea(
           child: NestedScrollView(
             body: TabBarView(
               children: [
-                ListView.builder(
-                  itemBuilder: (context, index) => const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
-                    child: DishCard(),
-                  ),
-                ),
-                const Text("Page 2"),
-                const Text("Page 3"),
-                const Text("Page 4"),
-                const Text("Page 5")
+                BlocBuilder<ProductsCubit, ProductsState>(
+                    builder: (ctx, state) {
+                  if (state is ProductsLoaded) {
+                    return Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20.w),
+                      child: ListView.builder(
+                        itemBuilder: (context, index) => DishCard(
+                          product: state.products.foodProducts[index],
+                        ),
+                        itemCount: state.products.foodProducts.length,
+                      ),
+                    );
+                  }
+                  if (state is Error) {
+                    return const Text('Error');
+                  }
+                  return const Center(
+                      child: CircularProgressIndicator.adaptive());
+                }),
+                BlocBuilder<ProductsCubit, ProductsState>(
+                    builder: (ctx, state) {
+                  if (state is ProductsLoaded) {
+                    return Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20.0.w),
+                      child: ListView.builder(
+                        itemBuilder: (context, index) => DishCard(
+                          product: state.products.drinkProducts[index],
+                        ),
+                        itemCount: state.products.drinkProducts.length,
+                      ),
+                    );
+                  }
+                  if (state is Error) {
+                    return const Text('Error');
+                  }
+                  return const Center(
+                      child: CircularProgressIndicator.adaptive());
+                }),
+                BlocBuilder<ProductsCubit, ProductsState>(
+                    builder: (ctx, state) {
+                  if (state is ProductsLoaded) {
+                    return ListView.builder(
+                      itemBuilder: (context, index) => DishCard(
+                        product: state.products.snackProducts[index],
+                      ),
+                      itemCount: state.products.snackProducts.length,
+                    );
+                  }
+                  if (state is Error) {
+                    return const Text('Error');
+                  }
+                  return const Center(
+                      child: CircularProgressIndicator.adaptive());
+                }),
+                BlocBuilder<ProductsCubit, ProductsState>(
+                    builder: (ctx, state) {
+                  if (state is ProductsLoaded) {
+                    return ListView.builder(
+                      itemBuilder: (context, index) => DishCard(
+                        product: state.products.sauceProducts[index],
+                      ),
+                      itemCount: state.products.sauceProducts.length,
+                    );
+                  }
+                  if (state is Error) {
+                    return const Text('Error');
+                  }
+                  return const Center(
+                      child: CircularProgressIndicator.adaptive());
+                }),
               ],
             ),
             headerSliverBuilder:
@@ -36,47 +99,47 @@ class HomeScreen extends StatelessWidget {
                 actions: const [
                   Icon(Icons.add_shopping_cart_rounded),
                 ],
-                expandedHeight: 350,
+                expandedHeight: 350.h,
                 elevation: 0.0,
                 pinned: true,
                 flexibleSpace: FlexibleSpaceBar(
                   background: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    padding: EdgeInsets.symmetric(horizontal: 20.w),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        const SizedBox(
-                          height: 50,
+                        SizedBox(
+                          height: 50.h,
                         ),
-                        const Text(
+                        Text(
                           'Delicious\nfood for you',
                           style: TextStyle(
-                            fontSize: 34,
+                            fontSize: 34.sp,
                           ),
                         ),
-                        const SizedBox(
-                          height: 30,
+                        SizedBox(
+                          height: 30.h,
                         ),
                         Container(
-                          margin: EdgeInsets.only(bottom: 30),
-                          height: 60,
+                          margin: const EdgeInsets.only(bottom: 30),
+                          height: 60.h,
                           padding: const EdgeInsets.only(left: 30),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(50),
-                            color: Colors.grey[300],
+                            color: Colors.grey[100],
                           ),
                           child: Row(
-                            children: const [
-                              Icon(
+                            children: [
+                              const Icon(
                                 Icons.search,
                                 color: Colors.black,
                               ),
                               SizedBox(
-                                width: 10,
+                                width: 10.w,
                               ),
-                              Text(
+                              const Text(
                                 'Search',
                                 style: TextStyle(
                                   fontSize: 15,
@@ -93,37 +156,32 @@ class HomeScreen extends StatelessWidget {
                 bottom: TabBar(
                   padding: const EdgeInsetsDirectional.only(start: 50),
                   isScrollable: true,
-                  labelColor: Colors.grey,
-                  indicatorColor: Color(0xFFFA4A0C),
+                  labelColor: const Color(0xFFFA4A0C),
+                  indicatorColor: const Color(0xFFFA4A0C),
+                  unselectedLabelColor: textTheme.headline3!.color,
                   tabs: [
                     Tab(
                       child: Text(
-                        "All",
-                        style: textTheme.subtitle2,
+                        "Foods",
+                        style: textTheme.headline5,
                       ),
                     ),
                     Tab(
                       child: Text(
-                        "Categories",
-                        style: textTheme.subtitle2,
+                        "Drinks",
+                        style: textTheme.headline5,
                       ),
                     ),
                     Tab(
                       child: Text(
-                        "Upcoming",
-                        style: textTheme.subtitle2,
+                        "Snacks",
+                        style: textTheme.headline5,
                       ),
                     ),
                     Tab(
                       child: Text(
-                        "Categories",
-                        style: textTheme.subtitle2,
-                      ),
-                    ),
-                    Tab(
-                      child: Text(
-                        "Upcoming",
-                        style: textTheme.subtitle2,
+                        "Sauce",
+                        style: textTheme.headline5,
                       ),
                     ),
                   ],
