@@ -83,12 +83,11 @@ class FoodApp extends StatelessWidget {
                   headline4: TextStyle(
                     fontSize: 18.sp,
                     color: const Color(0XFF3D454F),
-
                   ),
-                  headline5:  TextStyle(
-                  fontSize: 16.sp,
-                  color: const Color(0XFF3D454F),
-                ),
+                  headline5: TextStyle(
+                    fontSize: 16.sp,
+                    color: const Color(0XFF3D454F),
+                  ),
                   subtitle1: TextStyle(
                       fontSize: 14.sp,
                       color: Colors.grey,
@@ -100,7 +99,7 @@ class FoodApp extends StatelessWidget {
               darkTheme: ThemeData.dark(),
               themeMode: state ? ThemeMode.dark : ThemeMode.light,
               onGenerateRoute: AppRouter.onGenerateRoute,
-              initialRoute: AppRouter.testScreen,
+              // initialRoute: AppRouter.testScreen,
             );
           },
         ),
