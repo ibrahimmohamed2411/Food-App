@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_app/data/models/products.dart';
 import 'package:food_app/logic/cubit/basket/basket_item_cubit.dart';
+import 'package:food_app/presentation/screens/cart/cart_screen.dart';
 import 'package:food_app/presentation/screens/editProfile/edit_profile_screen.dart';
 
 import 'package:food_app/presentation/screens/home/home_screen.dart';
@@ -24,6 +25,7 @@ class AppRouter {
   static const String editProfileScreen = '/edit-profile';
   static const String testScreen = '/test';
   static const String productDetailsScreen = '/product-details-screen';
+  static const String cartScreen = '/cart-screen';
 
   static Route? onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -51,6 +53,13 @@ class AppRouter {
           builder: (context) => BlocProvider(
             create: (_) => BasketItemCubit(),
             child: ProductDetailsScreen(product: selectedProduct),
+          ),
+        );
+      case cartScreen:
+        return MaterialPageRoute(
+          builder: (context) => BlocProvider(
+            create: (context) => BasketItemCubit(),
+            child: CartScreen(),
           ),
         );
     }

@@ -5,6 +5,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_app/data/models/products.dart';
 import 'package:food_app/logic/cubit/basket/basket_item_cubit.dart';
+import 'package:food_app/logic/cubit/cart/cart_cubit.dart';
 import 'package:food_app/presentation/widgets/custom_card.dart';
 
 class ProductDetailsScreen extends StatelessWidget {
@@ -160,42 +161,47 @@ class ProductDetailsScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        OutlinedButton(
-                          style: OutlinedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            backgroundColor: Colors.deepOrange,
-                          ),
-                          onPressed: () {},
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 20),
-                            child: Row(
-                              children: [
-                                const Text(
-                                  'Add to basket',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w500,
-                                  ),
+                        BlocBuilder<BasketItemCubit, BasketItemState>(
+                          builder: (context, state) {
+                            return OutlinedButton(
+                              style: OutlinedButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
                                 ),
-                                const Spacer(),
-                                BlocBuilder<BasketItemCubit, BasketItemState>(
-                                  builder: (context, state) {
-                                    return Text(
+                                backgroundColor: Colors.deepOrange,
+                              ),
+                              onPressed: () {
+                                BlocProvider.of<CartCubit>(context)
+                                    .addItem(product, state.itemCount);
+                                Navigator.of(context).pop();
+                              },
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 20),
+                                child: Row(
+                                  children: [
+                                    const Text(
+                                      'Add to basket',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                    const Spacer(),
+                                    Text(
                                       'EGP ${product.price * state.itemCount}',
                                       style: const TextStyle(
                                         color: Colors.white,
                                         fontSize: 20,
                                         fontWeight: FontWeight.w500,
                                       ),
-                                    );
-                                  },
+                                    ),
+                                  ],
                                 ),
-                              ],
-                            ),
-                          ),
+                              ),
+                            );
+                          },
                         ),
                       ],
                     ),

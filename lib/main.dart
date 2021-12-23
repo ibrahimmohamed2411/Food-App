@@ -7,6 +7,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:food_app/constants/pallete.dart';
 import 'package:food_app/data/repositories/products_repository.dart';
 import 'package:food_app/logic/cubit/authentication/authentication_cubit.dart';
+import 'package:food_app/logic/cubit/basket/basket_item_cubit.dart';
+import 'package:food_app/logic/cubit/cart/cart_cubit.dart';
 import 'package:food_app/logic/cubit/forgotPassword/forgot_password_cubit.dart';
 import 'package:food_app/logic/cubit/products/products_cubit.dart';
 import 'package:food_app/logic/cubit/theme/theme_cubit.dart';
@@ -52,6 +54,9 @@ class FoodApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (BuildContext context) => ProductsCubit()..getProducts(),
+        ),
+        BlocProvider(
+          create: (BuildContext context) => CartCubit(),
         ),
       ],
       child: BlocBuilder<ThemeCubit, bool>(

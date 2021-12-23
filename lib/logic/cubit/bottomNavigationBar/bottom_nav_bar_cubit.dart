@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:food_app/presentation/screens/cart/cart_screen.dart';
 import 'package:food_app/presentation/screens/home/home_screen.dart';
 import 'package:food_app/presentation/screens/profile/profile_screen.dart';
 import 'package:meta/meta.dart';
@@ -10,7 +11,7 @@ part 'bottom_nav_bar_state.dart';
 class BottomNavBarCubit extends Cubit<BottomNavBarState> {
   List<Widget> screens = const [
     HomeScreen(),
-    Center(child: Text('shopping')),
+    CartScreen(),
     Center(child: Text('Fav')),
     ProfileScreen(),
   ];
