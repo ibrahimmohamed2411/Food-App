@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:food_app/presentation/widgets/custom_card.dart';
 import 'package:food_app/presentation/widgets/custom_text_field.dart';
+import 'package:food_app/presentation/widgets/image_picker_bottom_sheet.dart';
 import 'package:food_app/presentation/widgets/menu_item.dart';
 
 class EditProfileScreen extends StatelessWidget {
@@ -65,7 +66,13 @@ class EditProfileScreen extends StatelessWidget {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             IconButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                showModalBottomSheet(
+                                  context: context,
+                                  builder: (c) =>
+                                      const ImagePickerBottomSheet(),
+                                );
+                              },
                               icon: Icon(
                                 Icons.cloud_upload_outlined,
                                 color: Theme.of(context).primaryColor,

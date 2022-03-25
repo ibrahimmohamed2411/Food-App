@@ -1,7 +1,7 @@
 class CartItem {
   final String productId;
   final String title;
-  final int quantity;
+  int quantity;
   final num price;
   final String imageUrl;
   CartItem({
@@ -11,4 +11,10 @@ class CartItem {
     required this.quantity,
     required this.imageUrl,
   });
+  bool equals(CartItem cartItem) {
+    if (productId == cartItem.productId) {
+      return true;
+    }
+    return false;
+  }
 }

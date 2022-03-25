@@ -11,6 +11,7 @@ class CustomCard extends StatelessWidget {
     this.crossAxisAlignment,
     required this.children,
     this.onTap,
+    this.onDoubleTap,
     this.backgroundColor = Colors.white,
   }) : super(key: key);
   final MainAxisSize? mainAxisSize;
@@ -20,11 +21,13 @@ class CustomCard extends StatelessWidget {
   final EdgeInsets? padding;
   final GestureTapCallback? onTap;
   final Color? backgroundColor;
+  final GestureTapCallback? onDoubleTap;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
+      onDoubleTap: onDoubleTap,
       child: Container(
         decoration: BoxDecoration(
           color: backgroundColor,
