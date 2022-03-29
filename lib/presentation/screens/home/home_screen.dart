@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:food_app/data/models/products.dart';
 import 'package:food_app/presentation/screens/home/widgets/dish_card.dart';
 
+import '../../routes/app_router.dart';
+
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -10,6 +12,18 @@ class HomeScreen extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
 
     return Scaffold(
+      drawer: Drawer(
+        child: ListView(
+          children: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pushNamed(AppRouter.orderScreen);
+              },
+              child: const Text('Orders'),
+            ),
+          ],
+        ),
+      ),
       body: DefaultTabController(
         length: 5,
         child: SafeArea(
@@ -33,6 +47,7 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ),
                   ),
+                  itemCount: 5,
                 ),
                 const Text("Page 2"),
                 const Text("Page 3"),

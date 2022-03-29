@@ -2,17 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_app/data/models/products.dart';
 import 'package:food_app/logic/cubit/basket/basket_item_cubit.dart';
-import 'package:food_app/logic/cubit/cart/cart_cubit.dart';
 import 'package:food_app/presentation/screens/OTP/otp_screen.dart';
 import 'package:food_app/presentation/screens/cart/cart_screen.dart';
 import 'package:food_app/presentation/screens/editProfile/edit_profile_screen.dart';
 import 'package:food_app/presentation/screens/forgotPassword/forgot_password_screen.dart';
 import 'package:food_app/presentation/screens/home/home_screen.dart';
 import 'package:food_app/presentation/screens/landing/landing_page.dart';
+import 'package:food_app/presentation/screens/order/order_screen.dart';
 import 'package:food_app/presentation/screens/productDetails/product_details_screen.dart';
 import 'package:food_app/presentation/screens/profile/profile_screen.dart';
 import 'package:food_app/presentation/screens/signIn/sign_in_screen.dart';
 import 'package:food_app/presentation/screens/signUp/sign_up_screen.dart';
+
+import '../../logic/cubit/products/products_cubit.dart';
 
 class AppRouter {
   static const String signInScreen = '/sign-in-screen';
@@ -26,6 +28,7 @@ class AppRouter {
   static const String testScreen = '/test';
   static const String productDetailsScreen = '/product-details-screen';
   static const String cartScreen = '/cart-screen';
+  static const String orderScreen = '/order-screen';
 
   static Route? onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -39,7 +42,12 @@ class AppRouter {
         return MaterialPageRoute(
             builder: (context) => const ForgotPasswordScreen());
       case homeScreen:
-        return MaterialPageRoute(builder: (context) => const HomeScreen());
+        return MaterialPageRoute(
+          builder: (context) => BlocProvider(
+            create: (BuildContext context) => ProductsCubit()..getProducts(),
+            child: const HomeScreen(),
+          ),
+        );
       case signUpScreen:
         return MaterialPageRoute(builder: (context) => const SignUpScreen());
       case profileScreen:
@@ -57,10 +65,11 @@ class AppRouter {
         );
       case cartScreen:
         return MaterialPageRoute(
-          builder: (context) => BlocProvider(
-            create: (context) => CartCubit(),
-            child: const CartScreen(),
-          ),
+          builder: (context) => const CartScreen(),
+        );
+      case orderScreen:
+        return MaterialPageRoute(
+          builder: (context) => const OrderScreen(),
         );
     }
     return null;

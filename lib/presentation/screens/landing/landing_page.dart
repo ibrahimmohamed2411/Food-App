@@ -1,12 +1,11 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_app/logic/cubit/authentication/authentication_cubit.dart';
 import 'package:food_app/logic/cubit/bottomNavigationBar/bottom_nav_bar_cubit.dart';
 import 'package:food_app/logic/cubit/signInValidation/sign_in_validation_cubit.dart';
 import 'package:food_app/presentation/bottomnavigationbar/bottom_nav_bar_screen.dart';
-import 'package:food_app/presentation/screens/home/home_screen.dart';
 import 'package:food_app/presentation/screens/signIn/sign_in_screen.dart';
 
 class LandingPage extends StatelessWidget {
@@ -38,8 +37,12 @@ class LandingPage extends StatelessWidget {
               return const SignInScreen();
             }
 
-            return BlocProvider(
-              create: (_) => BottomNavBarCubit(),
+            return MultiBlocProvider(
+              providers: [
+                BlocProvider(
+                  create: (ctx) => BottomNavBarCubit(),
+                ),
+              ],
               child: const BottomNavigationBarScreen(),
             );
           }
