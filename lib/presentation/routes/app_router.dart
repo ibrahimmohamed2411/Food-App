@@ -14,6 +14,7 @@ import 'package:food_app/presentation/screens/profile/profile_screen.dart';
 import 'package:food_app/presentation/screens/signIn/sign_in_screen.dart';
 import 'package:food_app/presentation/screens/signUp/sign_up_screen.dart';
 
+import '../../logic/cubit/order/order_cubit.dart';
 import '../../logic/cubit/products/products_cubit.dart';
 
 class AppRouter {
@@ -30,7 +31,7 @@ class AppRouter {
   static const String cartScreen = '/cart-screen';
   static const String orderScreen = '/order-screen';
 
-  static Route? onGenerateRoute(RouteSettings settings) {
+  Route? onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       case landingScreen:
         return MaterialPageRoute(builder: (context) => const LandingPage());
@@ -69,7 +70,11 @@ class AppRouter {
         );
       case orderScreen:
         return MaterialPageRoute(
-          builder: (context) => const OrderScreen(),
+          builder: (context) => BlocProvider(
+            create: (BuildContext context) => OrderCubit()..getOrders(),
+            lazy: false,
+            child: OrderScreen(),
+          ),
         );
     }
     return null;

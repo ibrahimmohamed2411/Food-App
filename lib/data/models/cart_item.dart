@@ -13,6 +13,7 @@ class CartItem {
     required this.quantity,
     required this.imageUrl,
   });
+
   bool equals(CartItem cartItem) {
     if (productId == cartItem.productId) {
       return true;
@@ -31,9 +32,9 @@ class CartItem {
   }
 
   factory CartItem.fromQueryDocumentSnapshot(
-      QueryDocumentSnapshot<Object?> json) {
+      String id, QueryDocumentSnapshot<Object?> json) {
     return CartItem(
-      productId: json['productId'] as String,
+      productId: id,
       title: json['title'] as String,
       quantity: json['quantity'] as int,
       price: json['price'] as num,
@@ -42,7 +43,7 @@ class CartItem {
   }
   factory CartItem.fromJson(Map<String, dynamic> json) {
     return CartItem(
-      productId: json['productId'] as String,
+      productId: json['productId'] ?? '',
       title: json['title'] as String,
       quantity: json['quantity'] as int,
       price: json['price'] as num,

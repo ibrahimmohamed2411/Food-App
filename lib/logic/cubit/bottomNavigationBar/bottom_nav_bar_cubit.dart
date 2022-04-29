@@ -9,7 +9,7 @@ import 'package:food_app/presentation/screens/profile/profile_screen.dart';
 part 'bottom_nav_bar_state.dart';
 
 class BottomNavBarCubit extends Cubit<BottomNavBarState> {
-  List<Widget> screens = const [
+  List<Widget> screens = [
     HomeScreen(),
     CartScreen(),
     Center(child: Text('Fav')),

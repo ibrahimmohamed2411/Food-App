@@ -47,7 +47,7 @@ class LandingPage extends StatelessWidget {
             );
           }
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const CircularProgressIndicator();
+            return const Center(child: CircularProgressIndicator());
           }
           return const Text('Error');
         },

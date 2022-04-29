@@ -5,7 +5,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:food_app/constants/pallete.dart';
 import 'package:food_app/logic/cubit/authentication/authentication_cubit.dart';
 import 'package:food_app/logic/cubit/forgotPassword/forgot_password_cubit.dart';
-import 'package:food_app/logic/cubit/order/order_cubit.dart';
 import 'package:food_app/logic/cubit/theme/theme_cubit.dart';
 import 'package:food_app/logic/debug/app_bloc_observer.dart';
 import 'package:food_app/presentation/routes/app_router.dart';
@@ -48,11 +47,7 @@ class FoodApp extends StatelessWidget {
           create: (BuildContext context) => ForgotPasswordCubit(),
         ),
         BlocProvider(
-          create: (ctx) => CartCubit()..geBasketItems(),
-          lazy: false,
-        ),
-        BlocProvider(
-          create: (BuildContext context) => OrderCubit()..getOrders(),
+          create: (BuildContext context) => CartCubit()..geBasketItems(),
           lazy: false,
         ),
       ],
@@ -100,7 +95,7 @@ class FoodApp extends StatelessWidget {
               ),
               darkTheme: ThemeData.dark(),
               themeMode: state ? ThemeMode.dark : ThemeMode.light,
-              onGenerateRoute: AppRouter.onGenerateRoute,
+              onGenerateRoute: appRouter.onGenerateRoute,
               // initialRoute: AppRouter.testScreen,
             );
           },

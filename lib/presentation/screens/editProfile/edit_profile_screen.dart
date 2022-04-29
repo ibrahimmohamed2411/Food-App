@@ -19,12 +19,15 @@ class EditProfileScreen extends StatelessWidget {
           Icons.menu,
           color: Colors.black54,
         ),
-        actions: const [
-          Icon(
-            Icons.exit_to_app,
-            color: Colors.black54,
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(
+              Icons.exit_to_app,
+              color: Colors.black54,
+            ),
           ),
-          SizedBox(
+          const SizedBox(
             width: 10,
           ),
         ],
@@ -121,15 +124,18 @@ class EditProfileScreen extends StatelessWidget {
                     style: Theme.of(context).textTheme.headline3),
               ),
               SizedBox(height: 20.h),
-              CustomCard(
-                padding: EdgeInsets.all(25.h),
-                children: const [
-                  MenuItem(
-                    title: 'Remove Account',
-                    icon: Icons.delete,
-                    iconColor: Colors.red,
-                  )
-                ],
+              InkWell(
+                onTap: () {},
+                child: CustomCard(
+                  padding: EdgeInsets.all(25.h),
+                  children: const [
+                    MenuItem(
+                      title: 'Remove Account',
+                      icon: Icons.delete,
+                      iconColor: Colors.red,
+                    )
+                  ],
+                ),
               ),
             ],
           ),

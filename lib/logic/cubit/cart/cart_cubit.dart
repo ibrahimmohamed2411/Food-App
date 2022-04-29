@@ -10,12 +10,7 @@ part 'cart_state.dart';
 
 extension on List<CartItem> {
   int getItem(CartItem cartItem) {
-    for (int i = 0; i < length; i++) {
-      if (this[i].equals(cartItem)) {
-        return i;
-      }
-    }
-    return -1;
+    return indexWhere((element) => element.productId == cartItem.productId);
   }
 }
 
@@ -28,11 +23,11 @@ class CartCubit extends Cubit<CartState> {
       List<CartItem> cartItems = await _basketRepository.geBasketItems();
       emit(CartLoaded(cartItems: cartItems));
     } catch (e) {
-      emit(Error(message: e.toString()));
+      emit(CartError(message: e.toString()));
     }
   }
 
-  void addItem(Product product, int quantity) {
+  void addItem(Product product, int quantity) async {
     List<CartItem> cartItems =
         List<CartItem>.from((state as CartLoaded).cartItems);
     CartItem cartItem = CartItem(
@@ -43,6 +38,7 @@ class CartCubit extends Cubit<CartState> {
       quantity: quantity,
     );
     int index = cartItems.getItem(cartItem);
+
     if (index == -1) {
       cartItems.add(cartItem);
       FirebaseFirestore.instance
@@ -88,11 +84,10 @@ class CartCubit extends Cubit<CartState> {
         .collection(
             'basket/${FirebaseAuth.instance.currentUser!.uid}/basketItems')
         .doc(cartItem.productId)
-        .set(
+        .update(
       {
-        "quantity": cartItems[index].quantity,
+        'quantity': cartItems[index].quantity,
       },
-      SetOptions(merge: true),
     );
     emit(CartLoaded(cartItems: cartItems));
   }
@@ -108,30 +103,57 @@ class CartCubit extends Cubit<CartState> {
           .collection(
               'basket/${FirebaseAuth.instance.currentUser!.uid}/basketItems')
           .doc(cartItem.productId)
-          .set(
+          .update(
         {
-          "quantity": cartItems[index].quantity,
+          'quantity': cartItems[index].quantity,
         },
-        SetOptions(merge: true),
       );
       emit(CartLoaded(cartItems: cartItems));
     }
   }
 
-  Future<void> clearCart() async {
+  Future<void> productTransaction() async {
     try {
       final instance = FirebaseFirestore.instance;
       final batch = instance.batch();
-      var collection = instance.collection(
-          'basket/${FirebaseAuth.instance.currentUser!.uid}/basketItems');
-      var snapshots = await collection.get();
-      for (var doc in snapshots.docs) {
-        batch.delete(doc.reference);
+      // basket/${FirebaseAuth.instance.currentUser!.uid}/basketItems
+      List<CartItem> cartItems =
+          List<CartItem>.from((state as CartLoaded).cartItems);
+      final cartItemsList = [];
+      double totalPrice = 0;
+      for (CartItem cartItem in cartItems) {
+        var cartDoc = instance
+            .collection(
+                'basket/${FirebaseAuth.instance.currentUser!.uid}/basketItems')
+            .doc(cartItem.productId);
+
+        batch.delete(cartDoc);
+        totalPrice += cartItem.price * cartItem.quantity;
+        final productMap = {};
+        productMap['imageUrl'] = cartItem.imageUrl;
+        productMap['price'] = cartItem.price;
+        productMap['quantity'] = cartItem.quantity;
+        productMap['title'] = cartItem.title;
+
+        cartItemsList.add(productMap);
       }
+      var productDoc = instance
+          .collection(
+              'orders/${FirebaseAuth.instance.currentUser!.uid}/personalOrders')
+          .doc();
+      final productMap = {
+        'amount': totalPrice,
+        'cartItems': cartItemsList,
+        'orderDate': DateTime.now().toIso8601String(),
+      };
+
+      batch.set(productDoc, productMap);
+
       await batch.commit();
+
       emit(CartLoaded(cartItems: const []));
     } catch (e) {
-      emit(Error(message: e.toString()));
+      emit(CartError(message: e.toString()));
     }
   }
 }

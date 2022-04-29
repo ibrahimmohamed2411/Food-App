@@ -1,9 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:food_app/presentation/routes/app_router.dart';
 import 'package:food_app/presentation/widgets/custom_card.dart';
 import 'package:food_app/presentation/widgets/menu_item.dart';
+
+import '../../../logic/cubit/authentication/authentication_cubit.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -18,10 +21,15 @@ class ProfileScreen extends StatelessWidget {
           Icons.menu,
           color: Colors.black54,
         ),
-        actions: const [
-          Icon(
-            Icons.exit_to_app,
-            color: Colors.black54,
+        actions: [
+          IconButton(
+            onPressed: () {
+              BlocProvider.of<AuthenticationCubit>(context).signOut();
+            },
+            icon: const Icon(
+              Icons.exit_to_app,
+              color: Colors.black54,
+            ),
           ),
           SizedBox(
             width: 10,

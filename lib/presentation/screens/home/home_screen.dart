@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/data/models/products.dart';
+import 'package:food_app/presentation/screens/home/search.dart';
 import 'package:food_app/presentation/screens/home/widgets/dish_card.dart';
-
-import '../../routes/app_router.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -12,18 +11,6 @@ class HomeScreen extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
 
     return Scaffold(
-      drawer: Drawer(
-        child: ListView(
-          children: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pushNamed(AppRouter.orderScreen);
-              },
-              child: const Text('Orders'),
-            ),
-          ],
-        ),
-      ),
       body: DefaultTabController(
         length: 5,
         child: SafeArea(
@@ -87,31 +74,36 @@ class HomeScreen extends StatelessWidget {
                         const SizedBox(
                           height: 30,
                         ),
-                        Container(
-                          margin: EdgeInsets.only(bottom: 30),
-                          height: 60,
-                          padding: const EdgeInsets.only(left: 30),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(50),
-                            color: Colors.grey[300],
-                          ),
-                          child: Row(
-                            children: const [
-                              Icon(
-                                Icons.search,
-                                color: Colors.black,
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                'Search',
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  color: Colors.grey,
+                        InkWell(
+                          onTap: () {
+                            showSearch(context: context, delegate: Search());
+                          },
+                          child: Container(
+                            margin: EdgeInsets.only(bottom: 30),
+                            height: 60,
+                            padding: const EdgeInsets.only(left: 30),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(50),
+                              color: Colors.grey[300],
+                            ),
+                            child: Row(
+                              children: const [
+                                Icon(
+                                  Icons.search,
+                                  color: Colors.black,
                                 ),
-                              ),
-                            ],
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  'Search',
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ],

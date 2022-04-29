@@ -7,9 +7,9 @@ class CartInitial extends CartState {}
 
 class Loading extends CartState {}
 
-class Error extends CartState {
+class CartError extends CartState {
   final String message;
-  Error({required this.message});
+  CartError({required this.message});
 }
 
 class CartLoaded extends CartState {

@@ -14,7 +14,10 @@ class BasketRepository {
 
 List<CartItem> parseOrders(List<QueryDocumentSnapshot<Object?>> json) {
   if (json.isNotEmpty) {
-    return json.map((e) => CartItem.fromQueryDocumentSnapshot(e)).toList();
+    return json
+        .map((cartItem) =>
+            CartItem.fromQueryDocumentSnapshot(cartItem.id, cartItem))
+        .toList();
   }
   return [];
 }

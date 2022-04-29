@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:food_app/logic/cubit/cart/cart_cubit.dart';
 import 'package:food_app/presentation/screens/cart/widgets/cart_item_widget.dart';
 import 'package:food_app/presentation/screens/cart/widgets/empty_cart_widget.dart';
 
-import '../../../logic/cubit/order/order_cubit.dart';
+import '../../../logic/cubit/cart/cart_cubit.dart';
 
 class CartScreen extends StatelessWidget {
   const CartScreen({Key? key}) : super(key: key);
@@ -34,9 +33,9 @@ class CartScreen extends StatelessWidget {
                       backgroundColor: Colors.deepOrange,
                     ),
                     onPressed: () {
-                      BlocProvider.of<OrderCubit>(context)
-                          .addOrder(state.cartItems);
-                      BlocProvider.of<CartCubit>(context).clearCart();
+                      // BlocProvider.of<OrderCubit>(context)
+                      //     .addOrder(state.cartItems);
+                      BlocProvider.of<CartCubit>(context).productTransaction();
                     },
                     child: const Padding(
                       padding: EdgeInsets.symmetric(vertical: 20),
@@ -54,8 +53,11 @@ class CartScreen extends StatelessWidget {
               ],
             );
           }
+          return const EmptyCartWidget();
+        } else if (state is CartError) {
+          return const Center(child: Text('Error'));
         }
-        return const EmptyCartWidget();
+        return const Center(child: CircularProgressIndicator());
       },
     );
   }
