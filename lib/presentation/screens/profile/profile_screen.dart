@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:food_app/logic/cubit/theme/theme_cubit.dart';
 import 'package:food_app/presentation/routes/app_router.dart';
 import 'package:food_app/presentation/widgets/custom_card.dart';
 import 'package:food_app/presentation/widgets/menu_item.dart';
@@ -171,6 +172,21 @@ class ProfileScreen extends StatelessWidget {
                       value: true,
                       onChanged: (v) {},
                     ),
+                  ),
+                  BlocBuilder<ThemeCubit, bool>(
+                    builder: (context, state) {
+                      return MenuItem(
+                        title: 'Dark Theme',
+                        titleAtStart: true,
+                        trailing: CupertinoSwitch(
+                          activeColor: Theme.of(context).primaryColor,
+                          value: state,
+                          onChanged: (v) {
+                            BlocProvider.of<ThemeCubit>(context).toggleTheme(v);
+                          },
+                        ),
+                      );
+                    },
                   ),
                   const Divider(
                     height: 2,

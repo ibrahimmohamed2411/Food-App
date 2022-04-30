@@ -8,14 +8,23 @@ import 'package:food_app/logic/cubit/forgotPassword/forgot_password_cubit.dart';
 import 'package:food_app/logic/cubit/theme/theme_cubit.dart';
 import 'package:food_app/logic/debug/app_bloc_observer.dart';
 import 'package:food_app/presentation/routes/app_router.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'logic/cubit/cart/cart_cubit.dart';
 import 'logic/cubit/signInValidation/sign_in_validation_cubit.dart';
 import 'logic/cubit/signUpValidation/sign_up_validation_cubit.dart';
 
+late bool isDark;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  final instance = await SharedPreferences.getInstance();
+  bool? result = instance.getBool('isDark');
+  if (result == null) {
+    isDark = false;
+  } else {
+    isDark = result;
+  }
   BlocOverrides.runZoned(() {}, blocObserver: AppBlocObserver());
   runApp(
     FoodApp(appRouter: AppRouter()),
